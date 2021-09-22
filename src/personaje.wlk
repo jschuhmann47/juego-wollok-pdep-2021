@@ -1,14 +1,14 @@
 import wollok.game.*
+import bloques.*
+
 
 object personaje {
 	const posicionInicial = game.at(0,0)
 	var posicion = posicionInicial
 	var direccion = abajo
+	var posAnterior = posicionInicial
 	method position() = posicion
 	method image() = direccion.imagen()
-	method volveAlPrincipio() {
-		posicion = posicionInicial
-	}
 	method abajo() {
 		self.mirarHacia(abajo)
 		self.avanzar()
@@ -28,16 +28,22 @@ object personaje {
 	method mirarHacia(nuevaDireccion) {
 		direccion = nuevaDireccion
 	}
-
+	method caja()=false
 	method avanzar() {
-		posicion = self.siguientePosicion()
+		posAnterior = posicion
+		posicion=self.siguientePosicion()
+		var obj=game.getObjectsIn(posicion).any({ bloque => bloque.caja()})
+		if (obj){ //??
+			posicion = posAnterior
+		}
+	
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(posicion)
 
-	method colisionasteConEnemigo(enemigo) {
-		self.volveAlPrincipio()
-	}
+	//method colisionasteConEnemigo(enemigo) {
+	//	self.volveAlPrincipio()
+	//}
 }
 	
 

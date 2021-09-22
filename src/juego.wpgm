@@ -1,5 +1,6 @@
 import wollok.game.*
 import personaje.*
+import bloques.*
 
 program juego {
 	game.cellSize(32)
@@ -7,17 +8,23 @@ program juego {
 	game.width(15)
 	
 	game.addVisual(personaje)
+	//game.addVisual(bloque)
+	game.addVisualIn(new Bloque(posicion=game.at(0,0)), game.at(3,3))
+	game.addVisualIn(new Bloque(posicion=game.at(0,0)), game.at(3,4))
+	game.addVisualIn(new Bloque(posicion=game.at(0,0)), game.at(3,5))
 	//game.addVisual(enemigo)
-
+	    	
 	keyboard.down().onPressDo { personaje.abajo() }
 	keyboard.up().onPressDo { personaje.arriba() }
 	keyboard.right().onPressDo { personaje.derecha() }
 	keyboard.left().onPressDo { personaje.izquierda() }
 	//keyboard.x().onPressDo { personaje.atacar() }
 	
+	//game.onCollideDo(bloque,{personaje.posicionAnterior()})
 	//game.onCollideDo(enemigo, { otro =>
 	//	otro.colisionasteConEnemigo(enemigo)
 	//})
 	
 	game.start()
+	
 }
