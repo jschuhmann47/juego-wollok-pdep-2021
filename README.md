@@ -10,10 +10,17 @@ Si no, el enunciado es: https://docs.google.com/document/d/1-6pTgw9TTKHtsh7j7aIB
 
 ## Equipo
 
-**Nombre del equipo:** 
+**Nombre del equipo: Los Vindicadores** 
+
+Carpeta de Google Drive: https://drive.google.com/drive/folders/1cjJ1Q3aLPYyZ-Woz5vY73dt-MkRMGuq-?usp=sharing
 
 **Nombres de los integrantes:**
-- 
+- Juan Ignacio Schuhmann
+- b
+- c
+- d
+- e
+- f
 
 
 ## Objetivos
