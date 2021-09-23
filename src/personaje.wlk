@@ -1,14 +1,35 @@
 import wollok.game.*
-import bloques.*
+import paredes.*
 
+object personaje{
+	const posicionInicial = game.center()
+	var property position = posicionInicial
 
-object personaje {
-	const posicionInicial = game.at(0,0)
-	var posicion = posicionInicial
 	var direccion = abajo
-	var posAnterior = posicionInicial
-	method position() = posicion
-	method image() = direccion.imagen()
+	
+	method position() = position
+	method image() = "Visuals/CHARACTERS/player/hero-arriba.png"
+	
+//	method abajo(){
+//		position = position.down(1)
+//		opuesto = position.up(1)
+//	}
+//	
+//	method arriba(){
+//		position = position.up(1)
+//		opuesto = position.down(1)
+//	}
+//	
+//	method derecha(){
+//		position = position.right(1)
+//		opuesto = position.left(1)
+//	}
+//	
+//	method izquierda(){
+//		position = position.left(1)
+//		opuesto = position.right(1)
+//	}
+
 	method abajo() {
 		self.mirarHacia(abajo)
 		self.avanzar()
@@ -28,40 +49,38 @@ object personaje {
 	method mirarHacia(nuevaDireccion) {
 		direccion = nuevaDireccion
 	}
-	method caja()=false
+
 	method avanzar() {
-		posAnterior = posicion
-		posicion=self.siguientePosicion()
-		var obj=game.getObjectsIn(posicion).any({ bloque => bloque.caja()})
-		if (obj){ //??
-			posicion = posAnterior
-		}
-	
+		position = self.siguientePosicion()
 	}
 
-	method siguientePosicion() = direccion.siguientePosicion(posicion)
-
-	//method colisionasteConEnemigo(enemigo) {
-	//	self.volveAlPrincipio()
-	//}
-}
+	method siguientePosicion() = direccion.siguientePosicion(position)
 	
+	method colisionPared(_) {
+		position = direccion.direccionOpuesta(position)
+//		game.say(self, "hi")
+	}
+	
+}
+
 
 object arriba {
-	method siguientePosicion(posicion) {
-		return posicion.up(1)	
-	}
-	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
+	method siguientePosicion(posicion) = posicion.up(1)	
+	method direccionOpuesta(posicion) = posicion.down(1)	
+//	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
 }
 object izquierda {
 	method siguientePosicion(posicion) = posicion.left(1)
-	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
+	method direccionOpuesta(posicion) = posicion.right(1)
+//	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
 }
 object derecha {
 	method siguientePosicion(posicion) = posicion.right(1)
-	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
+	method direccionOpuesta(posicion) = posicion.left(1)
+//	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
 }
 object abajo {
 	method siguientePosicion(posicion) = posicion.down(1)
-	method imagen() = "Visuals/CHARACTERS/player/hero-abajo.png"
-}
+	method direccionOpuesta(posicion) = posicion.up(1)
+	}
+//	method imagen() = "Visuals/CHARACTERS/player/hero-abajo.png"

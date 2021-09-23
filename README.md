@@ -1,47 +1,32 @@
-# TP Integrador
+# Clase 18 - Bloques, Tests y Wollok Game
 
-## El enunciado
+## Material de la clase
 
-Si elegiste juego de Wollok game ignora este sector.
+- Clase grabada: _**Proximamente**_
+- Slides: https://docs.google.com/presentation/d/1eGcdyCqkloeS6dkOKr-tD6zSRfJGMfM55nd4uCm-FN4/edit?usp=sharing
+- Código: Acá :D.
 
-Si no, el enunciado es: https://docs.google.com/document/d/1-6pTgw9TTKHtsh7j7aIBhe5qsVYR3a8qIowCgsfv9gA/edit?usp=sharing
+## ¿Que hay para la clase que viene?
 
-**Fecha de primer entrega: 1/10**
+- Hacer el TP-1: https://classroom.github.com/a/K5W7Tf6e
 
-## Equipo
+## ¿Qué mas puedo leer, ver o practicar?
 
-**Nombre del equipo: Los Vindicadores** 
+### Documentación de Wollok
 
-Carpeta de Google Drive: https://drive.google.com/drive/folders/1cjJ1Q3aLPYyZ-Woz5vY73dt-MkRMGuq-?usp=sharing
+- https://www.wollok.org/documentacion/conceptos/
 
-**Nombres de los integrantes:**
-- Juan Ignacio Schuhmann
-- b
-- c
-- d
-- e
-- f
+### Apuntes de la cátedra
+- [Módulo 2: Referencias. Estado. Compartir objetos. Identidad](https://docs.google.com/document/d/14092iRsXDXih8-q_0UEXIGRSQmGtxL9pay1VXX4ceJg/edit?usp=sharing)
+- [Módulo 5: Introducción al testeo unitario automatizado](https://docs.google.com/document/d/1Q_v48gZfRmVfLMvC0PBpmtZyMoALbh11AwmEllP__eY/edit?usp=sharing)
+- [Módulo 11: Testeo unitario automatizado avanzado](https://docs.google.com/document/d/1caDE_mlP1QMfzyVpyvh-tKshjAeYLXBkXDYrTX5zFUI/edit?usp=sharing)
 
+### Wiki de Uqbar
 
-## Objetivos
+- [Bloques](https://wiki.uqbar.org/wiki/articles/bloques.html)
+    - Incluye una parte en la que se cuenta como el if se puede implementar como un envío de mensajes :) (**¿Cómo funciona el #ifTrue: y el #ifFalse: de Smalltalk?**).
 
-Los objetivos de este tp son practicar los conceptos vistos del paradigma de objetos.
+### Videos
 
-## Ayuda
-
-Si tienen dudas con Wollok pueden ayudarte todo el tiempo con esta documentación
-
-- [Guía de lenguajes](https://docs.google.com/document/d/1oJ-tyQJoBtJh0kFcsV9wSUpgpopjGtoyhJdPUdjFIJQ/edit?usp=sharing).
-- [Documentación de wollok](https://www.wollok.org/documentacion/wollokdoc/).
-
-Aparte, siempre pueden preguntar a sus ayudantes en discord!
-
-Y para comenzar a trabajar con Git les recomendamos [este apunte inicial de Git](https://docs.google.com/document/d/1ozqfYCwt-37stynmgAd5wJlNOFKWYQeIZoeqXpAEs0I/edit) o estos videos donde se explica como usar Git:
-- [Parte 1: Qué es GIT y cómo clonar el repo basado en GitHub classroom](https://www.youtube.com/watch?v=rRKe7l-ZNvM)
-- [Parte 2: Uso básico de GIT con status, add, reset, commit, push](https://www.youtube.com/watch?v=OgasfM5qJJE)
-- [Parte 3: Resolución de conflictos](https://www.youtube.com/watch?v=sKcN7cWFniw)
-
-## Que hacer cuando terminan el TP
-
-Cuando terminen, creen un issue etiquetando a sus tutores así les llega una notificación y se corrigen y les dejan feedback ahí.
-![](https://i.imgur.com/ypeXpBw.gif)
+- Bloques y testing, por Maiu + Nahue, 1.75hs
+[![Bloques y testing](https://img.youtube.com/vi/Bevl2jOGxTA/0.jpg)](https://youtu.be/Bevl2jOGxTA "Bloques y testing")

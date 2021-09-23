@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Automatic-Module-Name: integrador
+Automatic-Module-Name: ejemplo.wollok.game
 Bundle-ManifestVersion: 2
-Bundle-Name: integrador
+Bundle-Name: ejemplo.wollok.game
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: integrador; singleton:=true
+Bundle-SymbolicName: ejemplo.wollok.game; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.ibm.icu,
  org.eclipse.xtext,
