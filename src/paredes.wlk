@@ -1,4 +1,5 @@
 import personaje.*
+import enemigo.*
 import wollok.game.*
 import pared.*
 
@@ -39,16 +40,17 @@ object nivel1 {
 		// esquinero
 		posParedes.addAll([new Position(x=16,y=16), new Position(x=16,y=15),new Position(x=15,y=16)])
 		// cuadrado del medio
-		posParedes.addAll([new Position(x=6,y=12), new Position(x=7,y=12), new Position(x=8,y=12)])		//techo der
-		posParedes.addAll([new Position(x=4,y=11), new Position(x=5,y=11), new Position(x=6,y=11)])		//techo der
-		posParedes.addAll([new Position(x=11,y=12), new Position(x=12,y=12), new Position(x=13,y=12)])  //techo izq
-		posParedes.addAll([new Position(x=4,y=10), new Position(x=4,y=9),new Position(x=4,y=8)])		//pared izq
-		posParedes.addAll([new Position(x=13,y=11), new Position(x=13,y=10),new Position(x=13,y=9), new Position(x=13,y=8)]) //pared der
-		posParedes.addAll([new Position(x=5,y=8), new Position(x=6,y=8),new Position(x=7,y=8), new Position(x=8,y=8), new Position(x=9,y=8), new Position(x=10,y=8), new Position(x=11,y=8), new Position(x=12,y=8), new Position(x=13,y=8)]) //piso
+//		posParedes.addAll([new Position(x=6,y=12), new Position(x=7,y=12), new Position(x=8,y=12)])		//techo der
+//		posParedes.addAll([new Position(x=4,y=11), new Position(x=5,y=11), new Position(x=6,y=11)])		//techo der
+//		posParedes.addAll([new Position(x=11,y=12), new Position(x=12,y=12), new Position(x=13,y=12)])  //techo izq
+//		posParedes.addAll([new Position(x=4,y=10), new Position(x=4,y=9),new Position(x=4,y=8)])		//pared izq
+//		posParedes.addAll([new Position(x=13,y=11), new Position(x=13,y=10),new Position(x=13,y=9), new Position(x=13,y=8)]) //pared der
+//		posParedes.addAll([new Position(x=5,y=8), new Position(x=6,y=8),new Position(x=7,y=8), new Position(x=8,y=8), new Position(x=9,y=8), new Position(x=10,y=8), new Position(x=11,y=8), new Position(x=12,y=8), new Position(x=13,y=8)]) //piso
 		
 		posParedes.forEach { p => self.dibujar(new Pared(position = p)) }	
 		
 		game.whenCollideDo(personaje, { e => personaje.colisionPared(e) })
+		game.whenCollideDo(enemigo, { e => enemigo.colisionPared(e) })
 			
 	}
 	

@@ -1,6 +1,7 @@
 import wollok.game.*
 import personaje.*
 import paredes.*
+import enemigo.*
 
 program juego {
 //	game.cellSize(32)
@@ -29,6 +30,7 @@ program juego {
 	game.boardGround("Visuals/BACKGROUND/background.jpg")
 	
 	game.addVisual(personaje)
+	game.addVisual(enemigo)
 	
 	keyboard.down().onPressDo { personaje.abajo() }
 	keyboard.up().onPressDo { personaje.arriba() }
@@ -39,6 +41,8 @@ program juego {
 	keyboard.w().onPressDo { game.say(personaje, "mamaaa cortaste toda la loz") }
 	keyboard.e().onPressDo { game.say(personaje, "miamiiii") }
 	keyboard.r().onPressDo { game.say(personaje, "yo no manejo el rating, yo manejo un roll royce") }
+	
+	game.onTick(300, "movimiento", { enemigo.avanzar() })
 	
 	nivel1.cargar()
 	
