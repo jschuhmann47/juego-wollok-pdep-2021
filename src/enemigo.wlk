@@ -5,18 +5,33 @@ import personaje.*
 object enemigo{
 	const posicionInicial = game.at(1,1)
 	var property position = posicionInicial
-
 	var direccion = abajoEnemigo
 	var property direccionChoque = abajoEnemigo
 	
 	var xEnemigo = self.position().x()
-	var yEnemigo = self.position().x()
-	var xPersonaje = personaje.position().x()
-	var yPersonaje = personaje.position().x()
+	var yEnemigo = self.position().y()
+//	var xPersonaje = personaje.position().x()
+//	var yPersonaje = personaje.position().y()
 	
 	method position() = position
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
-
+	method perseguir()  {
+		const xPersonaje = personaje.position().x()
+		const yPersonaje = personaje.position().y()
+		if(xEnemigo!=xPersonaje){
+			if(xEnemigo>xPersonaje)
+				xEnemigo --
+			else 
+				xEnemigo ++
+		}
+		if(yEnemigo!=yPersonaje){
+			if(yEnemigo>yPersonaje)
+				yEnemigo --
+			else 
+				yEnemigo ++
+		}
+		position = game.at(xEnemigo,yEnemigo)
+	}
 	method abajo() {
 		self.mirarHacia(arribaEnemigo)
 		self.avanzar()
@@ -60,24 +75,24 @@ object enemigo{
 //		game.say(self, "hi")
 	}
 	
-	method avanzarEnemigo(){
-		xEnemigo = self.position().x()
-		yEnemigo = self.position().y()
-		xPersonaje = personaje.position().x()
-		yPersonaje = personaje.position().y()
-		
-		var distanciaInicial = vectores.obtenerDistancia(xEnemigo,yEnemigo,xPersonaje,yPersonaje)
-		//si lo muevo para arriba que calcule
-		if(vectores.obtenerDistancia(xEnemigo,yEnemigo + 1,xPersonaje,yPersonaje) < distanciaInicial){
-			self.arriba()
-		}else if(vectores.obtenerDistancia(xEnemigo,yEnemigo - 1,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
-			self.abajo()
-		}else if(vectores.obtenerDistancia(xEnemigo + 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //derecha
-			self.derecha()
-		}else if(vectores.obtenerDistancia(xEnemigo - 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
-			self.izquierda()
-		} 
-	}
+//	method avanzarEnemigo(){
+//		xEnemigo = self.position().x()
+//		yEnemigo = self.position().y()
+//		xPersonaje = personaje.position().x()
+//		yPersonaje = personaje.position().y()
+//		
+//		var distanciaInicial = vectores.obtenerDistancia(xEnemigo,yEnemigo,xPersonaje,yPersonaje)
+//		//si lo muevo para arriba que calcule
+//		if(vectores.obtenerDistancia(xEnemigo,yEnemigo + 1,xPersonaje,yPersonaje) < distanciaInicial){
+//			self.arriba()
+//		}else if(vectores.obtenerDistancia(xEnemigo,yEnemigo - 1,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
+//			self.abajo()
+//		}else if(vectores.obtenerDistancia(xEnemigo + 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //derecha
+//			self.derecha()
+//		}else if(vectores.obtenerDistancia(xEnemigo - 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
+//			self.izquierda()
+//		} 
+//	}
 	
 }
 
