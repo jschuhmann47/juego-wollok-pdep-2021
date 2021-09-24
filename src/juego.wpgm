@@ -42,7 +42,9 @@ program juego {
 	keyboard.e().onPressDo { game.say(personaje, "miamiiii") }
 	keyboard.r().onPressDo { game.say(personaje, "yo no manejo el rating, yo manejo un roll royce") }
 	
-	game.onTick(300, "movimiento", { enemigo.avanzar() })
+	game.onTick(300, "movimiento", { enemigo.avanzarEnemigo() })
+	
+//	game.onTick(300, "movimiento", { game.say(personaje, "mi posicion es (" + personaje.position().x().toString() + "," + personaje.position().x().toString() + ")" )  })
 	
 	nivel1.cargar()
 	
