@@ -54,7 +54,14 @@ object enemigo{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		game.whenCollideDo(personaje, { e => personaje.colisionEnemigo(e) })
+		var ee=game.getObjectsIn(self.position()).any({ e => e.esPersonaje()})
+		var pp=game.getObjectsIn(self.position()).any({ pa => pa.esPared()})
+		if (ee){
+			personaje.colisionEnemigo(ee)
+		}
+		if (pp){
+			self.colisionPared(pp)
+		}
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -82,6 +89,8 @@ object enemigo{
 	method esEnemigo()=true
 	
 	method esPared()=false
+	
+	method esPersonaje()=false
 	
 //	method avanzarEnemigo(){
 //		xEnemigo = self.position().x()

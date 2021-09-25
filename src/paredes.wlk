@@ -50,9 +50,6 @@ object nivel1 {
 		
 		posParedes.forEach { p => self.dibujar(new Pared(position = p)) }	
 		
-		game.whenCollideDo(personaje, { e => personaje.colisionPared(e) })
-		game.whenCollideDo(enemigo, { e => enemigo.colisionPared(e) })
-		// problemas con esta parte, porque cuando el enemigo choca al personaje, el personaje y el enemigo ejecutan codigo como si se chocaran contra una pared.
 			
 	}
 	

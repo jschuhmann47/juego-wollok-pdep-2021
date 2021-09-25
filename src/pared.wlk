@@ -10,4 +10,5 @@ class Pared {
 	method image() = "Visuals/OBJECTS/items/pared.png"
 	method esEnemigo()=false
 	method esPared()=true
+	method esPersonaje()=false
 }

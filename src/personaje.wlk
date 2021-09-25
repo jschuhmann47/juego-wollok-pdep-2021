@@ -52,6 +52,10 @@ object personaje{
 
 	method avanzar() {
 		position = self.siguientePosicion()
+		var pp=game.getObjectsIn(self.position()).any({ p => p.esPared()})
+		if(pp){
+			self.colisionPared(pp)
+		}
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -65,6 +69,8 @@ object personaje{
 	method esEnemigo()=false
 	
 	method esPared()=false
+	
+	method esPersonaje()=true
 	
 	method colisionEnemigo(_){
 		game.say(self, "Perdiste")
