@@ -3,6 +3,7 @@ import enemigo.*
 import wollok.game.*
 import pared.*
 
+
 object nivel1 {
 	
 	method cargar() {

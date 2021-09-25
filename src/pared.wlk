@@ -8,4 +8,6 @@ class Pared {
 	
 	method puedePisarte(_) = false
 	method image() = "Visuals/OBJECTS/items/pared.png"
+	method esEnemigo()=false
+	method esPared()=true
 }

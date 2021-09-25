@@ -54,26 +54,34 @@ object enemigo{
 
 	method avanzar() {
 		position = self.siguientePosicion()
+		game.whenCollideDo(personaje, { e => personaje.colisionEnemigo(e) })
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
 	method colisionPared(_) {
-		direccionChoque = direccion
-		position = direccion.direccionOpuesta(position)
-		if(self.direccionChoque() == arribaEnemigo){
-			self.mirarHacia(derechaEnemigo)
-		}else if(self.direccionChoque() == derechaEnemigo){
-			self.mirarHacia(abajoEnemigo)
-		}else if(self.direccionChoque() == abajoEnemigo){
-			self.mirarHacia(izquierdaEnemigo)
-		}else if(self.direccionChoque() == izquierdaEnemigo){
-			self.mirarHacia(arribaEnemigo)
-		}
 		
-		self.avanzar()
+			direccionChoque = direccion
+			position = direccion.direccionOpuesta(position)
+			if(self.direccionChoque() == arribaEnemigo){
+				self.mirarHacia(derechaEnemigo)
+			}else if(self.direccionChoque() == derechaEnemigo){
+				self.mirarHacia(abajoEnemigo)
+			}else if(self.direccionChoque() == abajoEnemigo){
+				self.mirarHacia(izquierdaEnemigo)
+			}else if(self.direccionChoque() == izquierdaEnemigo){
+				self.mirarHacia(arribaEnemigo)
+			}
+			
+			self.avanzar()
+		
+		}
 //		game.say(self, "hi")
-	}
+
+	
+	method esEnemigo()=true
+	
+	method esPared()=false
 	
 //	method avanzarEnemigo(){
 //		xEnemigo = self.position().x()

@@ -57,10 +57,20 @@ object personaje{
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
 	method colisionPared(_) {
-		position = direccion.direccionOpuesta(position)
-//		game.say(self, "hi")
+		position = direccion.direccionOpuesta(position)	
 	}
+
+//		game.say(self, "hi")
 	
+	method esEnemigo()=false
+	
+	method esPared()=false
+	
+	method colisionEnemigo(_){
+		game.say(self, "Perdiste")
+		game.removeVisual(self)
+	}
+
 }
 
 
