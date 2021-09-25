@@ -54,7 +54,7 @@ object enemigo{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		var ee=game.getObjectsIn(self.position()).any({ e => e.esPersonaje()})
+		var ee=game.getObjectsIn(self.position()).any({ s => s.esPersonaje()})
 		var pp=game.getObjectsIn(self.position()).any({ pa => pa.esPared()})
 		if (ee){
 			personaje.colisionEnemigo(ee)
