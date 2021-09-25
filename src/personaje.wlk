@@ -72,7 +72,7 @@ object personaje{
 	
 	method esPersonaje()=true
 	
-	method colisionEnemigo(ee){
+	method colisionEnemigo(){ //no se por que no se ejecuta, deberia andar ni idea
 		game.say(self, "Perdiste")
 		game.removeVisual(self)
 	}
