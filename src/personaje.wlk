@@ -7,6 +7,7 @@ object personaje{
 	var direccion = abajo
 	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
 	var property vidas = 3
+	var property armaActual = null
 
 	method abajo() {
 		self.mirarHacia(abajo)
@@ -30,9 +31,8 @@ object personaje{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		/*var pp = game.getObjectsIn(self.position()).any({ p => p.esPared()})
-		if(pp)
-			self.colisionPared(pp)*/
+		if (armaActual != null)
+			self.usarArma(armaActual)
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -46,14 +46,20 @@ object personaje{
 	method esPersonaje() = true
 	method esArma() = false
 	
-	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo
+	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo, solo tiene que entender el mensaje
 	
 	method agarrarSorpresa(sorpresa){
 		sorpresa.efecto()
 	}
 	
 	method usarArma(arma){
-		arma.position(self.siguientePosicion())
+		armaActual = arma
+		armaActual.position(self.siguientePosicion())
+	}
+	
+	method soltarArma(){
+		game.removeVisual(armaActual)
+		armaActual = null
 	}
 	
 	method morir(){
@@ -76,21 +82,7 @@ object personaje{
 	method volverAlInicio(){
 		position = posicionInicial
 	}
-	
-/* El personaje salta
-	method saltar(){
-		self.subir()
-		game.schedule(500, {self.caer()})
-	}
-	
-	method subir(){
-		position = position.up(2)
-	}
 
-	method caer(){
-		position = position.down(2)
-	}
-*/
 }
 
 

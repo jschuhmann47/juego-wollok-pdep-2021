@@ -34,7 +34,7 @@ object juego {
 		keyboard.up().onPressDo { personaje.arriba() }
 		keyboard.right().onPressDo { personaje.derecha() }
 		keyboard.left().onPressDo { personaje.izquierda() }
-		//keyboard.space().onPressDo { personaje.saltar() }	
+		keyboard.s().onPressDo { personaje.soltarArma() }
 	
 		keyboard.q().onPressDo { game.say(personaje, "basta chicos") }
 		keyboard.w().onPressDo { game.say(personaje, "mamaaa cortaste toda la loz") }

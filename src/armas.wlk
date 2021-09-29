@@ -10,6 +10,7 @@ class Arma{
 	method esArma() = true
 	method esPared() = false
 	method esPersonaje() = false
+	method esSorpresa() = false
 	
 	method tocarEnemigo(enem) {
 		game.removeVisual(enem)
