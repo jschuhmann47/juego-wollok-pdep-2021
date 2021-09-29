@@ -10,28 +10,26 @@ object enemigo{
 	
 	var xEnemigo = self.position().x()
 	var yEnemigo = self.position().y()
-//	var xPersonaje = personaje.position().x()
-//	var yPersonaje = personaje.position().y()
 	
-	method position() = position
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
-	method perseguir()  {
+	method perseguir() {
 		const xPersonaje = personaje.position().x()
 		const yPersonaje = personaje.position().y()
-		if(xEnemigo!=xPersonaje){
-			if(xEnemigo>xPersonaje)
+		if(xEnemigo != xPersonaje){
+			if(xEnemigo > xPersonaje)
 				xEnemigo --
 			else 
 				xEnemigo ++
 		}
-		if(yEnemigo!=yPersonaje){
-			if(yEnemigo>yPersonaje)
+		if(yEnemigo != yPersonaje){
+			if(yEnemigo > yPersonaje)
 				yEnemigo --
 			else 
 				yEnemigo ++
 		}
 		position = game.at(xEnemigo,yEnemigo)
 	}
+	
 	method abajo() {
 		self.mirarHacia(arribaEnemigo)
 		self.avanzar()
@@ -54,25 +52,24 @@ object enemigo{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		var pp=game.getObjectsIn(self.position()).any({ pa => pa.esPared()})
+		var pp = game.getObjectsIn(self.position()).any({ pa => pa.esPared()})
 		if (pp){
-			self.colisionPared(pp)
+			self.colisionPared()
 		}
 	}
 	
-	method chequearJugador(){
-		var ee=game.getObjectsIn(self.position()).any({ s => s.esPersonaje()})
+	method chequearJugador() {
+		var ee = game.getObjectsIn(self.position()).any({ s => s.esPersonaje()})
 		if (ee){
 			game.say(personaje, "Perdiste")
 			game.removeVisual(personaje)
 			game.stop()
 		}
-		
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
-	method colisionPared(_) {
+	method colisionPared() {
 		
 			direccionChoque = direccion
 			position = direccion.direccionOpuesta(position)
@@ -87,16 +84,11 @@ object enemigo{
 			}
 			
 			self.avanzar()
-		
 		}
-//		game.say(self, "hi")
-
 	
-	method esEnemigo()=true
-	
-	method esPared()=false
-	
-	method esPersonaje()=false
+	method esEnemigo() = true	
+	method esPared() = false
+	method esPersonaje() = false
 	
 //	method avanzarEnemigo(){
 //		xEnemigo = self.position().x()
@@ -148,4 +140,4 @@ object derechaEnemigo {
 object abajoEnemigo {
 	method siguientePosicion(posicion) = posicion.down(1)
 	method direccionOpuesta(posicion) = posicion.up(1)
-	}
+}

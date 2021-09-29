@@ -4,11 +4,8 @@ import paredes.*
 object personaje{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
-
 	var direccion = abajo
-	
-	method position() = position
-	method image() = "Visuals/CHARACTERS/player/hero-arriba.png"
+	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
 	
 //	method abajo(){
 //		position = position.down(1)
@@ -52,7 +49,7 @@ object personaje{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		var pp=game.getObjectsIn(self.position()).any({ p => p.esPared()})
+		var pp = game.getObjectsIn(self.position()).any({ p => p.esPared()})
 		if(pp){
 			self.colisionPared(pp)
 		}
@@ -63,20 +60,40 @@ object personaje{
 	method colisionPared(_) {
 		position = direccion.direccionOpuesta(position)	
 	}
-
-//		game.say(self, "hi")
 	
-	method esEnemigo()=false
-	
-	method esPared()=false
-	
-	method esPersonaje()=true
+	method esEnemigo() = false
+	method esPared() = false
+	method esPersonaje() = true
 	
 	method colisionEnemigo(){ //no se por que no se ejecuta, deberia andar ni idea
 		game.say(self, "Perdiste")
 		game.removeVisual(self)
 	}
+	
+	method agarrarSorpresa(sorpresa){
+		game.say(self, "agarré una sorpresa!")
+		game.removeVisual(sorpresa)
+	}
+	
+	method usarArma(arma){
+		game.say(self, "agarré un arma!")
+		arma.position(self.siguientePosicion())
+	}
+	
+/* El personaje salta
+	method saltar(){
+		self.subir()
+		game.schedule(500, {self.caer()})
+	}
+	
+	method subir(){
+		position = position.up(2)
+	}
 
+	method caer(){
+		position = position.down(2)
+	}
+*/
 }
 
 
@@ -98,5 +115,5 @@ object derecha {
 object abajo {
 	method siguientePosicion(posicion) = posicion.down(1)
 	method direccionOpuesta(posicion) = posicion.up(1)
-	}
 //	method imagen() = "Visuals/CHARACTERS/player/hero-abajo.png"
+}

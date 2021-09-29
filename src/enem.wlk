@@ -6,10 +6,8 @@ import personaje.*
 class Enemigo{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
-
 	var direccion = abajo
 	
-	method position() = position
 	method image() = "Visuals/CHARACTERS/player/hero-arriba.png"
 	
 //	method abajo(){
@@ -60,7 +58,6 @@ class Enemigo{
 	
 	method colisionPared(_) {
 		position = direccion.direccionOpuesta(position)
-//		game.say(self, "hi")
 	}
 	
 }
