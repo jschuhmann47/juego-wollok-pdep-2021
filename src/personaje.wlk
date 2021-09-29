@@ -46,11 +46,6 @@ object personaje{
 	method esPersonaje() = true
 	method esArma() = false
 	
-/* 	method colisionEnemigo(){ //no se por que no se ejecuta, deberia andar ni idea
-		game.say(self, "Perdiste")
-		game.removeVisual(self)
-	}
-*/	
 	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo
 	
 	method agarrarSorpresa(sorpresa){

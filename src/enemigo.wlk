@@ -59,16 +59,6 @@ object enemigo{
 			position = posicionTemporal
 	}
 	
-/*	method chequearJugador() {
-		var ee = game.getObjectsIn(self.position()).any({ s => s.esPersonaje()})
-		if (ee){
-			game.say(personaje, "Perdiste")
-			game.removeVisual(personaje)
-			game.stop()
-		}
-	}
-*/
-	
 	method tocarPersonaje(pers){
 		game.say(self, "Perdiste una vida")
 		pers.perderVida()
@@ -124,7 +114,7 @@ object enemigo{
 	
 }
 
-object vectores{
+/*object vectores{
 	method obtenerDistancia(xEnemigo,yEnemigo,xPersonaje,yPersonaje){
 		var rX = 0
 		var rY = 0
@@ -133,7 +123,7 @@ object vectores{
 		
 		return (rX ** 2 + rY ** 2)** 0.5 
 	}
-}
+}*/
 
 object arribaEnemigo {
 	method siguientePosicion(posicion) = posicion.up(1)
