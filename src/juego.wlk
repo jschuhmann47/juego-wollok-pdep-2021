@@ -13,6 +13,7 @@ object juego {
 		
 		game.addVisual(personaje)
 		game.addVisual(enemigo)
+		game.addVisual(vida)
 		
 		keyboard.down().onPressDo { personaje.abajo() }
 		keyboard.up().onPressDo { personaje.arriba() }
@@ -25,12 +26,13 @@ object juego {
 		keyboard.e().onPressDo { game.say(personaje, "miamiiii") }
 		keyboard.r().onPressDo { game.say(personaje, "yo no manejo el rating, yo manejo un roll royce") }
 		
-		game.onTick(600, "movimiento", { enemigo.perseguir() })
-		game.onTick(600, "matar personaje", { enemigo.chequearJugador() })
-		game.onTick(5000, "aparece sorpresa", { self.aparecerSorpresa() })
-		game.onTick(5000, "aparece arma", { self.aparecerArma() })
+		game.onTick(1000, "movimiento", { enemigo.perseguir() })
+		//game.onTick(600, "matar personaje", { enemigo.chequearJugador() })
+		game.onTick(2000, "aparece sorpresa", { self.aparecerSorpresa() })
+		//game.onTick(5000, "aparece arma", { self.aparecerArma() })
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
+		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
 
 		nivel1.cargar()
 		
@@ -38,8 +40,8 @@ object juego {
 	}
 	
 	method calcularPosicionAleatoria() {
-		const x = (0..game.width()-1).anyOne()
-		const y = (0..game.height()-1).anyOne()
+		const x = (0 .. game.width()-1).anyOne()
+		const y = (0 .. game.height()-1).anyOne()
 		return game.at(x,y)
 	}
 	
@@ -66,21 +68,73 @@ object juego {
 	
 }
 
+object colores {
+	const property blanco = "FFFFFFFF"
+	const property rojo = "FF0000FF"
+}
+
+object vida{
+	var property position = game.at(9, 19)
+	method image() = "Visuals/OBJECTS/blocks/pared.png"
+	method text() = personaje.vidas().toString() + " VIDA/S"
+	method textColor() = colores.blanco()
+	method tocarPersonaje(pers){
+		pers.colisionPared()
+	}
+}
+
 class Sorpresa {
 	var property position
+	method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
+	
 	method esSorpresa() = true
 	method esPared() = false
 	method esPersonaje() = false
-	method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
+	method esArma() = false
+	
+	method tocarEnemigo(enem) {
+		game.removeVisual(self)
+	}
+	
+	method efecto(){
+		const nroSorpresa = (1 .. 4).anyOne()
+		
+		if (nroSorpresa == 0){
+			game.say(personaje, "Ups! Game over :(")
+			personaje.morir()}
+		else if (nroSorpresa == 1){
+			game.say(personaje, "Bien! El enemigo se queda quieto por 5 segundos :D")
+			enemigo.quedarseQuieto()}
+		else if (nroSorpresa == 2){
+			game.say(personaje, "Ups! Perdiste una vida :(")
+			personaje.perderVida()}
+		else if (nroSorpresa == 3){
+			game.say(personaje, "Bien! Ganaste una vida :D")
+			personaje.ganarVida()}
+		else
+			game.say(personaje, "Bueno, esta sorpresa no hace nada :p")
+		game.removeVisual(self)
+	}
+	
+	method tocarPersonaje(pers){
+		pers.agarrarSorpresa(self)
+	}
+	
 }
 
 class Arma{
 	var property position
+	method image() = "Visuals/OBJECTS/items/sword.png"
+	
 	method esArma() = true
 	method esPared() = false
 	method esPersonaje() = false
-	method tocarEnemigo(enemigo) {
-		game.removeVisual(enemigo)
+	
+	method tocarEnemigo(enem) {
+		game.removeVisual(enem)
 	}
-	method image() = "Visuals/OBJECTS/items/sword.png"
+	method tocarPersonaje(pers){
+		pers.usarArma(self)
+	}
+	
 }

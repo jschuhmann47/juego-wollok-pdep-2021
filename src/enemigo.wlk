@@ -12,53 +12,54 @@ object enemigo{
 	var yEnemigo = self.position().y()
 	
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
+	
 	method perseguir() {
+		xEnemigo = self.position().x()
+		yEnemigo = self.position().y()
+		
 		const xPersonaje = personaje.position().x()
 		const yPersonaje = personaje.position().y()
 		if(xEnemigo != xPersonaje){
-			if(xEnemigo > xPersonaje)
+			if(xEnemigo > xPersonaje){
 				xEnemigo --
-			else 
+				direccion = izquierdaEnemigo}
+			else{
 				xEnemigo ++
+				direccion = derechaEnemigo}
 		}
-		if(yEnemigo != yPersonaje){
-			if(yEnemigo > yPersonaje)
+		else if(yEnemigo != yPersonaje){
+			if(yEnemigo > yPersonaje){
 				yEnemigo --
-			else 
+				direccion = abajoEnemigo}
+			else{
 				yEnemigo ++
+				direccion = arribaEnemigo}
 		}
-		position = game.at(xEnemigo,yEnemigo)
+		
+		const posicionTemporal = game.at(xEnemigo, yEnemigo)
+		
+		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
+		if (esP)
+			self.colisionPared()
+		else
+			position = posicionTemporal
 	}
 	
-	method abajo() {
-		self.mirarHacia(arribaEnemigo)
-		self.avanzar()
-	}
-	method izquierda() {
-		self.mirarHacia(izquierdaEnemigo)
-		self.avanzar()
-	}
-	method derecha() {
-		self.mirarHacia(derechaEnemigo)
-		self.avanzar()
-	}
-	method arriba() {
-		self.mirarHacia(arribaEnemigo)
-		self.avanzar()
-	}
 	method mirarHacia(nuevaDireccion) {
 		direccion = nuevaDireccion
 	}
 
-	method avanzar() {
-		position = self.siguientePosicion()
-		var pp = game.getObjectsIn(self.position()).any({ pa => pa.esPared()})
-		if (pp){
+	method avanzar(direc) {
+		const posicionTemporal = self.consultarSiguientePosicion(direc)
+		
+		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
+		if (esP)
 			self.colisionPared()
-		}
+		else
+			position = posicionTemporal
 	}
 	
-	method chequearJugador() {
+/*	method chequearJugador() {
 		var ee = game.getObjectsIn(self.position()).any({ s => s.esPersonaje()})
 		if (ee){
 			game.say(personaje, "Perdiste")
@@ -66,29 +67,41 @@ object enemigo{
 			game.stop()
 		}
 	}
-
+*/
+	
+	method tocarPersonaje(pers){
+		game.say(self, "Perdiste una vida")
+		pers.perderVida()
+	}
+	
 	method siguientePosicion() = direccion.siguientePosicion(position)
+	method consultarSiguientePosicion(direc) = direc.sigPos(position)
 	
 	method colisionPared() {
-		
 			direccionChoque = direccion
-			position = direccion.direccionOpuesta(position)
-			if(self.direccionChoque() == arribaEnemigo){
+			//position = direccion.direccionOpuesta(position)
+			if(direccionChoque == arribaEnemigo){
 				self.mirarHacia(derechaEnemigo)
-			}else if(self.direccionChoque() == derechaEnemigo){
+			}else if(direccionChoque == derechaEnemigo){
 				self.mirarHacia(abajoEnemigo)
-			}else if(self.direccionChoque() == abajoEnemigo){
+			}else if(direccionChoque == abajoEnemigo){
 				self.mirarHacia(izquierdaEnemigo)
-			}else if(self.direccionChoque() == izquierdaEnemigo){
+			}else if(direccionChoque == izquierdaEnemigo){
 				self.mirarHacia(arribaEnemigo)
 			}
 			
-			self.avanzar()
-		}
+			self.avanzar(direccion)
+			self.avanzar(direccionChoque)
+	}
 	
 	method esEnemigo() = true	
 	method esPared() = false
 	method esPersonaje() = false
+	
+	method quedarseQuieto(){
+		game.removeTickEvent ("movimiento")
+		game.schedule (5000, { game.onTick(1000, "movimiento", { self.perseguir() }) })
+	}
 	
 //	method avanzarEnemigo(){
 //		xEnemigo = self.position().x()
@@ -123,21 +136,41 @@ object vectores{
 }
 
 object arribaEnemigo {
-	method siguientePosicion(posicion) = posicion.up(1)	
+	method siguientePosicion(posicion) = posicion.up(1)
+	method sigPos(posicion) {
+		var x = posicion.x()
+		var y = posicion.y()
+		return game.at(x, y+1)
+	}
 	method direccionOpuesta(posicion) = posicion.down(1)	
 //	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
 }
 object izquierdaEnemigo {
 	method siguientePosicion(posicion) = posicion.left(1)
+	method sigPos(posicion) {
+		const x = posicion.x()
+		const y = posicion.y()
+		return game.at(x-1, y)
+	}
 	method direccionOpuesta(posicion) = posicion.right(1)
 //	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
 }
 object derechaEnemigo {
 	method siguientePosicion(posicion) = posicion.right(1)
+	method sigPos(posicion) {
+		const x = posicion.x()
+		const y = posicion.y()
+		return game.at(x+1, y)
+	}
 	method direccionOpuesta(posicion) = posicion.left(1)
 //	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
 }
 object abajoEnemigo {
 	method siguientePosicion(posicion) = posicion.down(1)
+	method sigPos(posicion) {
+		const x = posicion.x()
+		const y = posicion.y()
+		return game.at(x, y-1)
+	}
 	method direccionOpuesta(posicion) = posicion.up(1)
 }

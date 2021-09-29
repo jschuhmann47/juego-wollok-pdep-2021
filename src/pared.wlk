@@ -1,4 +1,3 @@
-
 class Pared {
 	var property position
 	
@@ -11,7 +10,12 @@ class Pared {
 	method esEnemigo() = false
 	method esPared() = true
 	method esPersonaje() = false
-	method tocarEnemigo(enemigo){
-		enemigo.colisionPared()
+	
+	method tocarEnemigo(enem){
+		enem.colisionPared()
 	}
+	method tocarPersonaje(pers){
+		pers.colisionPared()
+	}
+	
 }

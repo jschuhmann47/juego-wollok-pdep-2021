@@ -6,26 +6,7 @@ object personaje{
 	var property position = posicionInicial
 	var direccion = abajo
 	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
-	
-//	method abajo(){
-//		position = position.down(1)
-//		opuesto = position.up(1)
-//	}
-//	
-//	method arriba(){
-//		position = position.up(1)
-//		opuesto = position.down(1)
-//	}
-//	
-//	method derecha(){
-//		position = position.right(1)
-//		opuesto = position.left(1)
-//	}
-//	
-//	method izquierda(){
-//		position = position.left(1)
-//		opuesto = position.right(1)
-//	}
+	var property vidas = 3
 
 	method abajo() {
 		self.mirarHacia(abajo)
@@ -49,35 +30,56 @@ object personaje{
 
 	method avanzar() {
 		position = self.siguientePosicion()
-		var pp = game.getObjectsIn(self.position()).any({ p => p.esPared()})
-		if(pp){
-			self.colisionPared(pp)
-		}
+		/*var pp = game.getObjectsIn(self.position()).any({ p => p.esPared()})
+		if(pp)
+			self.colisionPared(pp)*/
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
-	method colisionPared(_) {
+	method colisionPared() {
 		position = direccion.direccionOpuesta(position)	
 	}
 	
 	method esEnemigo() = false
 	method esPared() = false
 	method esPersonaje() = true
+	method esArma() = false
 	
-	method colisionEnemigo(){ //no se por que no se ejecuta, deberia andar ni idea
+/* 	method colisionEnemigo(){ //no se por que no se ejecuta, deberia andar ni idea
 		game.say(self, "Perdiste")
 		game.removeVisual(self)
 	}
+*/	
+	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo
 	
 	method agarrarSorpresa(sorpresa){
-		game.say(self, "agarré una sorpresa!")
-		game.removeVisual(sorpresa)
+		sorpresa.efecto()
 	}
 	
 	method usarArma(arma){
-		game.say(self, "agarré un arma!")
 		arma.position(self.siguientePosicion())
+	}
+	
+	method morir(){
+		game.removeVisual(self)
+		game.stop()
+	}
+	
+	method ganarVida(){
+		vidas += 1
+	}
+	
+	method perderVida(){
+		vidas -= 1
+		if (vidas == 0)
+			self.morir()
+		else
+			self.volverAlInicio()
+	}
+	
+	method volverAlInicio(){
+		position = posicionInicial
 	}
 	
 /* El personaje salta

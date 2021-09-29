@@ -14,7 +14,8 @@ object nivel1 {
 	
 		var posParedes = []
 		(0 .. ancho).forEach{ n => posParedes.add(new Position(x=n, y=0)) } // bordeAbajo
-		(0 .. ancho).forEach{ n => posParedes.add(new Position(x=n, y=largo)) } // bordeArriba 
+		(0 .. 8).forEach{ n => posParedes.add(new Position(x=n, y=largo)) } // bordeArriba 1
+		(10 .. largo).forEach{ n => posParedes.add(new Position(x=n, y=largo)) } // bordeArriba 2
 		(0 .. largo).forEach{ n => posParedes.add(new Position(x=0, y=n)) } // bordeIzq 
 		(0 .. largo).forEach{ n => posParedes.add(new Position(x=ancho, y=n)) } // bordeDer
 		
@@ -47,7 +48,7 @@ object nivel1 {
 //		posParedes.addAll([new Position(x=4,y=10), new Position(x=4,y=9),new Position(x=4,y=8)])		//pared izq
 //		posParedes.addAll([new Position(x=13,y=11), new Position(x=13,y=10),new Position(x=13,y=9), new Position(x=13,y=8)]) //pared der
 //		posParedes.addAll([new Position(x=5,y=8), new Position(x=6,y=8),new Position(x=7,y=8), new Position(x=8,y=8), new Position(x=9,y=8), new Position(x=10,y=8), new Position(x=11,y=8), new Position(x=12,y=8), new Position(x=13,y=8)]) //piso
-		
+		posParedes.addAll([new Position(x=3,y=10)])
 		posParedes.forEach { p => self.dibujar(new Pared(position = p)) }	
 		
 			
@@ -58,15 +59,4 @@ object nivel1 {
 		return dibujo
 	}
 	
-}
-
-class Pared {
-	var property position
-	
-	method movete(direccion) {
-		throw new Exception(message = "No puedes mover las paredes.")
-	}
-	
-	method puedePisarte(_) = false
-	method image() = "muro.png"
 }
