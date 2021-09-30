@@ -4,6 +4,8 @@ import paredes.*
 import enemigo.*
 import sorpresasYVidas.*
 import armas.*
+import monedas.*
+
 
 object juego {
 	
@@ -21,6 +23,7 @@ object juego {
 		game.height(20)
 		game.title("Juego")
 		game.ground("Visuals/BACKGROUND/terrain.jpg")
+		game.addVisual(puntos)
 	}
 	
 	method agregarPersonajes() {
@@ -46,6 +49,13 @@ object juego {
 		game.onTick(2000, "movimiento", { enemigo.perseguir() })
 		game.onTick(10000, "aparece sorpresa", { self.aparecerSorpresa() })
 		game.onTick(10000, "aparece arma", { self.aparecerArma() })
+		game.onTick (4000, "spawn Item", {
+			const moneda = new Moneda()
+			moneda.valor()
+			moneda.getNewPosition()
+			game.addVisual(moneda)
+		})
+		
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })

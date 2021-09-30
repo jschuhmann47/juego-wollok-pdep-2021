@@ -58,3 +58,14 @@ object vida{
 	method esSorpresa() = false
 	method esArma() = false
 }
+
+object puntos{
+	var puntuacion = 0
+	const property position = game.at(9,18)
+	
+	method text() = puntuacion.toString()
+	
+	method aumentarPuntuacion(puntos){
+		puntuacion = puntuacion + puntos
+	}
+}
