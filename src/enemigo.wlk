@@ -65,7 +65,10 @@ object enemigo{
 	}
 	
 	method siguientePosicion() = direccion.siguientePosicion(position)
-	method consultarSiguientePosicion(direc) = direc.sigPos(position)
+	method consultarSiguientePosicion(direc) {
+		const posicionTemporal = position
+		return direc.siguientePosicion(posicionTemporal)
+	}
 	
 	method colisionPared() {
 			direccionChoque = direccion
@@ -87,6 +90,8 @@ object enemigo{
 	method esEnemigo() = true	
 	method esPared() = false
 	method esPersonaje() = false
+	method esSorpresa() = false
+	method esArma() = false
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento")
@@ -127,40 +132,20 @@ object enemigo{
 
 object arribaEnemigo {
 	method siguientePosicion(posicion) = posicion.up(1)
-	method sigPos(posicion) {
-		var x = posicion.x()
-		var y = posicion.y()
-		return game.at(x, y+1)
-	}
 	method direccionOpuesta(posicion) = posicion.down(1)	
 //	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
 }
 object izquierdaEnemigo {
 	method siguientePosicion(posicion) = posicion.left(1)
-	method sigPos(posicion) {
-		const x = posicion.x()
-		const y = posicion.y()
-		return game.at(x-1, y)
-	}
 	method direccionOpuesta(posicion) = posicion.right(1)
 //	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
 }
 object derechaEnemigo {
 	method siguientePosicion(posicion) = posicion.right(1)
-	method sigPos(posicion) {
-		const x = posicion.x()
-		const y = posicion.y()
-		return game.at(x+1, y)
-	}
 	method direccionOpuesta(posicion) = posicion.left(1)
 //	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
 }
 object abajoEnemigo {
 	method siguientePosicion(posicion) = posicion.down(1)
-	method sigPos(posicion) {
-		const x = posicion.x()
-		const y = posicion.y()
-		return game.at(x, y-1)
-	}
 	method direccionOpuesta(posicion) = posicion.up(1)
 }

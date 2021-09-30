@@ -43,7 +43,7 @@ object juego {
 	}
 	
 	method definirEventos() {
-		game.onTick(1000, "movimiento", { enemigo.perseguir() })
+		game.onTick(2000, "movimiento", { enemigo.perseguir() })
 		game.onTick(10000, "aparece sorpresa", { self.aparecerSorpresa() })
 		game.onTick(10000, "aparece arma", { self.aparecerArma() })
 		

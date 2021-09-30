@@ -11,9 +11,7 @@ class Pared {
 	method esPared() = true
 	method esPersonaje() = false
 	
-	method tocarEnemigo(enem){
-		enem.colisionPared()
-	}
+	method tocarEnemigo(enem){} //la pared no hace nada, porque ya lo hace el enemigo, solo tiene que entender el mensaje
 	method tocarPersonaje(pers){
 		pers.colisionPared()
 	}

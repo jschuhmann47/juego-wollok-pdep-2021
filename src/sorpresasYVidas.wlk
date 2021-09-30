@@ -55,4 +55,6 @@ object vida{
 	method tocarPersonaje(pers){
 		pers.colisionPared()
 	}
+	method esSorpresa() = false
+	method esArma() = false
 }
