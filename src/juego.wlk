@@ -23,13 +23,13 @@ object juego {
 		game.height(20)
 		game.title("Juego")
 		game.ground("Visuals/BACKGROUND/terrain.jpg")
-		game.addVisual(puntos)
 	}
 	
 	method agregarPersonajes() {
 		game.addVisual(personaje)
 		game.addVisual(enemigo)
 		game.addVisual(vida)
+		game.addVisual(puntos)
 	}
 	
 	method definirControles() {
@@ -49,12 +49,7 @@ object juego {
 		game.onTick(2000, "movimiento", { enemigo.perseguir() })
 		game.onTick(10000, "aparece sorpresa", { self.aparecerSorpresa() })
 		game.onTick(10000, "aparece arma", { self.aparecerArma() })
-		game.onTick (4000, "spawn Item", {
-			const moneda = new Moneda()
-			moneda.valor()
-			moneda.getNewPosition()
-			game.addVisual(moneda)
-		})
+		game.onTick(4000, "aparece moneda", { self.aparecerMoneda()	})
 		
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
@@ -69,7 +64,7 @@ object juego {
 	
 	method aparecerSorpresa() {
 		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ p => p.esPared() || p.esArma()})
+		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esArma() || objeto.esMoneda() })
 		if(esP)
 			self.aparecerSorpresa()
 		else
@@ -78,11 +73,23 @@ object juego {
 	
 	method aparecerArma(){
 		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ p => p.esPared() || p.esSorpresa()})
+		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esSorpresa() || objeto.esMoneda() })
 		if(esP)
-			self.aparecerSorpresa()
+			self.aparecerArma()
 		else
 			game.addVisual( new Arma(position = posicionAleatoria) )
+	}
+	
+	method aparecerMoneda(){
+		const posicionAleatoria = self.calcularPosicionAleatoria()
+		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esMoneda() || objeto.esArma() || objeto.esSorpresa() })
+		if(esP)
+			self.aparecerMoneda()
+		else{
+			const nuevaMoneda = new Moneda(position = posicionAleatoria)
+			nuevaMoneda.calcularValorMoneda()
+			game.addVisual(nuevaMoneda)
+		}
 	}
 	
 }

@@ -45,6 +45,7 @@ object personaje{
 	method esPared() = false
 	method esPersonaje() = true
 	method esArma() = false
+	method esMoneda() = false
 	
 	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo, solo tiene que entender el mensaje
 	

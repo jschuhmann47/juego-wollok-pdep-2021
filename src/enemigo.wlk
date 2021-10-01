@@ -92,6 +92,7 @@ object enemigo{
 	method esPersonaje() = false
 	method esSorpresa() = false
 	method esArma() = false
+	method esMoneda() = false
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento")

@@ -11,13 +11,14 @@ class Sorpresa {
 	method esPared() = false
 	method esPersonaje() = false
 	method esArma() = false
+	method esMoneda() = false
 	
 	method tocarEnemigo(enem) {
 		game.removeVisual(self)
 	}
 	
 	method efecto(){
-		const nroSorpresa = (0 .. 4).anyOne()
+		const nroSorpresa = 0.randomUpTo(4)
 		
 		if (nroSorpresa == 0){
 			game.say(personaje, "Ups! Game over :(")
@@ -48,7 +49,7 @@ object colores {
 }
 
 object vida{
-	var property position = game.at(9, 19)
+	const property position = game.at(9, 19)
 	method image() = "Visuals/OBJECTS/blocks/pared.png"
 	method text() = personaje.vidas().toString() + " VIDA/S"
 	method textColor() = colores.blanco()
@@ -57,15 +58,14 @@ object vida{
 	}
 	method esSorpresa() = false
 	method esArma() = false
+	method esMoneda() = false
 }
 
 object puntos{
 	var puntuacion = 0
 	const property position = game.at(9,18)
-	
 	method text() = puntuacion.toString()
-	
 	method aumentarPuntuacion(puntos){
-		puntuacion = puntuacion + puntos
+		puntuacion += puntos
 	}
 }
