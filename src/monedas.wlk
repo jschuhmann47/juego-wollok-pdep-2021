@@ -6,6 +6,9 @@ class Moneda {
 	var valor = 0
 	var property image = "Visuals/OBJECTS/items/bronce.png"
 	method esMoneda() = true
+	method esPared() = false
+	method esArma() = false
+	method esSorpresa() = false
 	//override method toString() = 'moneda'
 	
 	method calcularValorMoneda(){

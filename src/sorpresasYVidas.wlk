@@ -18,7 +18,7 @@ class Sorpresa {
 	}
 	
 	method efecto(){
-		const nroSorpresa = 0.randomUpTo(4)
+		const nroSorpresa = (0 .. 4).anyOne()
 		
 		if (nroSorpresa == 0){
 			game.say(personaje, "Ups! Game over :(")
