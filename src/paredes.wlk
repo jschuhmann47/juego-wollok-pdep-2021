@@ -56,7 +56,6 @@ object nivel1 {
 	
 	method dibujar(dibujo) {
 		game.addVisual(dibujo)
-		return dibujo
 	}
 	
 }

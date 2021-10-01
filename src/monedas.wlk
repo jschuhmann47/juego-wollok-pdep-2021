@@ -1,5 +1,6 @@
 import wollok.game.*
 import sorpresasYVidas.*
+import personaje.*
 
 class Moneda {
 	var property position = game.origin()
@@ -13,7 +14,7 @@ class Moneda {
 	
 	method calcularValorMoneda(){
 		const tipoMoneda = 0.randomUpTo(10)
-		
+
 		if(tipoMoneda < 6){
 			valor = 100
 			image = "Visuals/OBJECTS/items/bronce.png"

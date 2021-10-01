@@ -51,7 +51,6 @@ object juego {
 		game.onTick(10000, "aparece arma", { self.aparecerArma() })
 		game.onTick(4000, "aparece moneda", { self.aparecerMoneda()	})
 		
-		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
 	}
