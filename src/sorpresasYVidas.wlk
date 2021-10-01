@@ -50,8 +50,8 @@ object colores {
 
 object vida{
 	const property position = game.at(9, 19)
-	method image() = "Visuals/OBJECTS/blocks/pared.png"
-	method text() = personaje.vidas().toString() + " VIDA/S"
+	method image() = "Visuals/OBJECTS/items/paredConCorazon.png"
+	method text() = personaje.vidas().toString()
 	method textColor() = colores.blanco()
 	method tocarPersonaje(pers){
 		pers.colisionPared()
@@ -68,4 +68,6 @@ object puntos{
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
 	}
+	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
+	
 }
