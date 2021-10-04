@@ -33,10 +33,10 @@ object juego {
 	}
 	
 	method definirControles() {
-		keyboard.down().onPressDo { personaje.abajo() }
-		keyboard.up().onPressDo { personaje.arriba() }
-		keyboard.right().onPressDo { personaje.derecha() }
-		keyboard.left().onPressDo { personaje.izquierda() }
+		keyboard.down().onPressDo { personaje.caminar(abajo) }
+		keyboard.up().onPressDo { personaje.caminar(arriba) }
+		keyboard.right().onPressDo { personaje.caminar(derecha) }
+		keyboard.left().onPressDo { personaje.caminar(izquierda) }
 		keyboard.s().onPressDo { personaje.soltarArma() }
 	
 		keyboard.q().onPressDo { game.say(personaje, "basta chicos") }
@@ -47,9 +47,9 @@ object juego {
 	
 	method definirEventos() {
 		game.onTick(2000, "movimiento", { enemigo.perseguir() })
-		game.onTick(10000, "aparece sorpresa", { self.aparecerSorpresa() })
-		game.onTick(10000, "aparece arma", { self.aparecerArma() })
-		game.onTick(4000, "aparece moneda", { self.aparecerMoneda()	})
+		game.onTick(10000, "aparece sorpresa", { self.spawnear("sorpresa") })
+		game.onTick(10000, "aparece arma", { self.spawnear("arma") })
+		game.onTick(4000, "aparece moneda", { self.spawnear("moneda")	})
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
@@ -61,34 +61,37 @@ object juego {
 		return game.at(x,y)
 	}
 	
-	method aparecerSorpresa() {
-		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esArma() || objeto.esMoneda() })
-		if(esP)
-			self.aparecerSorpresa()
-		else
-			game.addVisual( new Sorpresa(position = posicionAleatoria) )
+	method spawnear(objeto){
+		var posicionAleatoria=self.calcularPos()
+		if(objeto=="sorpresa"){
+			aparecer.aparecerSorpresa(posicionAleatoria)
+		}
+		if(objeto=="moneda"){
+			aparecer.aparecerMoneda(posicionAleatoria)
+		}
+		if(objeto=="arma"){
+			aparecer.aparecerArma(posicionAleatoria)
+		}
+		else{}
 	}
 	
-	method aparecerArma(){
+	method calcularPos() {
 		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esSorpresa() || objeto.esMoneda() })
+		const esP = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esArma() || o.esMoneda() })
 		if(esP)
-			self.aparecerArma()
+			self.calcularPos()
 		else
-			game.addVisual( new Arma(position = posicionAleatoria) )
+			return posicionAleatoria
 	}
 	
-	method aparecerMoneda(){
-		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ objeto => objeto.esPared() || objeto.esMoneda() || objeto.esArma() || objeto.esSorpresa() })
-		if(esP)
-			self.aparecerMoneda()
-		else{
+}
+
+object aparecer{
+	method aparecerArma(posicionAleatoria)=game.addVisual( new Arma(position = posicionAleatoria) )
+	method aparecerSorpresa(posicionAleatoria)=game.addVisual( new Sorpresa(position = posicionAleatoria) )
+	method aparecerMoneda(posicionAleatoria){
 			const nuevaMoneda = new Moneda(position = posicionAleatoria)
 			nuevaMoneda.calcularValorMoneda()
 			game.addVisual(nuevaMoneda)
-		}
 	}
-	
 }

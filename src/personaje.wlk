@@ -9,27 +9,8 @@ object personaje{
 	var property vidas = 3
 	var property armaActual = null
 
-	method abajo() {
-		self.mirarHacia(abajo)
-		self.avanzar()
-	}
-	method izquierda() {
-		self.mirarHacia(izquierda)
-		self.avanzar()
-	}
-	method derecha() {
-		self.mirarHacia(derecha)
-		self.avanzar()
-	}
-	method arriba() {
-		self.mirarHacia(arriba)
-		self.avanzar()
-	}
-	method mirarHacia(nuevaDireccion) {
-		direccion = nuevaDireccion
-	}
-
-	method avanzar() {
+	method caminar(direcc){
+		direccion=direcc
 		position = self.siguientePosicion()
 		if (armaActual != null)
 			self.usarArma(armaActual)
