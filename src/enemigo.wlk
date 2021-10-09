@@ -12,37 +12,53 @@ object enemigo{
 	var yEnemigo = self.position().y()
 	
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
-	
-	method perseguir() {
-		xEnemigo = self.position().x()
-		yEnemigo = self.position().y()
 		
-		const xPersonaje = personaje.position().x()
-		const yPersonaje = personaje.position().y()
-		if(xEnemigo != xPersonaje){
-			if(xEnemigo > xPersonaje){
-				xEnemigo --
-				direccion = izquierdaEnemigo}
-			else{
-				xEnemigo ++
-				direccion = derechaEnemigo}
-		}
-		else if(yEnemigo != yPersonaje){
-			if(yEnemigo > yPersonaje){
-				yEnemigo --
-				direccion = abajoEnemigo}
-			else{
-				yEnemigo ++
-				direccion = arribaEnemigo}
-		}
-		
-		const posicionTemporal = game.at(xEnemigo, yEnemigo)
-		
-		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
-		if (esP)
-			self.colisionPared()
-		else
-			position = posicionTemporal
+	method perseguir(){
+//		xEnemigo = self.position().x()
+//		yEnemigo = self.position().y()
+//		
+//		const xPersonaje = personaje.position().x()
+//		const yPersonaje = personaje.position().y()
+//		if(xEnemigo != xPersonaje){
+//			if(xEnemigo > xPersonaje){
+//				xEnemigo --
+//				direccion = izquierdaEnemigo}
+//			else{
+//				xEnemigo ++
+//				direccion = derechaEnemigo}
+//		}
+//		else if(yEnemigo != yPersonaje){
+//			if(yEnemigo > yPersonaje){
+//				yEnemigo --
+//				direccion = abajoEnemigo}
+//			else{
+//				yEnemigo ++
+//				direccion = arribaEnemigo}
+//		}
+//		
+//		const posicionTemporal = game.at(xEnemigo, yEnemigo)
+//		
+//		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
+//		if (esP)
+//			self.colisionPared()
+//		else
+//			position = posicionTemporal
+			const xPersonaje = personaje.position().x()
+			const yPersonaje = personaje.position().y()
+			
+			if(xEnemigo!=xPersonaje){
+				if(xEnemigo>xPersonaje)
+					xEnemigo --
+				else 
+					xEnemigo ++
+			}
+			if(yEnemigo!=yPersonaje){
+				if(yEnemigo>yPersonaje)
+					yEnemigo --
+				else 
+					yEnemigo ++
+			}
+		position = game.at(xEnemigo,yEnemigo)
 	}
 	
 	method mirarHacia(nuevaDireccion) {
