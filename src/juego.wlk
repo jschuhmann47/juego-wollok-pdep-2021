@@ -47,22 +47,18 @@ object juego {
 	
 	method definirEventos() {
 		game.onTick(2000, "movimiento", { enemigo.perseguir() })
-		game.onTick(10000, "aparece sorpresa", { self.spawnear("Sorpresas") })
-		game.onTick(10000, "aparece arma", { self.spawnear("ArmasMelee") })
-		game.onTick(4000, "aparece moneda", { self.spawnear("Monedas")	})
+		game.onTick(10000, "aparece sorpresa", { 
+			self.spawnear(new Sorpresas(position = calcularPosAleatoria.calcularPosAleatoriaLibre()))
+		})
+		game.onTick(10000, "aparece arma", { self.spawnear(new ArmasMelee(position = calcularPosAleatoria.calcularPosAleatoriaLibre())) })
+		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = calcularPosAleatoria.calcularPosAleatoriaLibre()))	})
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
 	}
 	
-	method calcularPosicionAleatoria() {
-		const x = (0 .. game.width()-1).anyOne()
-		const y = (0 .. game.height()-1).anyOne()
-		return game.at(x,y)
-	}
-	
 	method spawnear(objeto){
-		objeto.aparecer()
+		objeto.aparecer(objeto)
 	}
 }
 

@@ -2,6 +2,7 @@ import wollok.game.*
 import personaje.*
 import enemigo.*
 import sorpresasYVidas.*
+import juego.*
 
 
 class Objetos {
@@ -19,7 +20,9 @@ class Objetos {
 	}	
 	//method esObjeto() = true
 	
-	method aparecer()
+	method aparecer(obj){
+		game.addVisual(obj)
+	}
 	method tocarPersonaje(param)
 	method desaparecer(){
 		game.removeVisual(self)
@@ -32,10 +35,7 @@ class Objetos {
 
 
 class ArmasMelee inherits Objetos{
-	override method aparecer(){
-		game.addVisual( new ArmasMelee(position = self.calcularPosicionAleatoria()) )
 		
-	}
 	override method image() = "Visuals/OBJECTS/items/sword.png"
 	
 	override method esArma() = true
@@ -47,19 +47,19 @@ class ArmasMelee inherits Objetos{
 }
 
 class Monedas inherits Objetos{
-	var image = "Visuals/OBJECTS/items/bronce.png"
-	var valor = 0
-	override method image() = "Visuals/OBJECTS/items/bronce.png"
+	var property image = "Visuals/OBJECTS/items/bronce.png"
+	var property valor = 0
 	override method esMoneda() = true
 	
 	
-	override method tocarPersonaje(_){
-		puntos.aumentarPuntuacion(valor)
+	override method tocarPersonaje(pers){
+		puntos.aumentarPuntuacion(self.valor())
 		game.removeVisual(self)
 	}
 	
-	override method aparecer(){
-		game.addVisual( new Monedas(position = self.calcularPosicionAleatoria()) )
+	override method aparecer(obj){
+		obj.calcularValorMoneda()
+		game.addVisual(obj)
 		
 	}
 	
@@ -68,17 +68,17 @@ class Monedas inherits Objetos{
 		const tipoMoneda = 0.randomUpTo(10)
 
 		if(tipoMoneda < 6){
-			valor = 100
-			image = "Visuals/OBJECTS/items/bronce.png"
+			self.valor(100)
+			self.image("Visuals/OBJECTS/items/bronce.png")
 		}
 		else{
 			if(tipoMoneda < 9){
-				valor = 200
-				image = "Visuals/OBJECTS/items/plata.png"
+				self.valor(200)
+				self.image("Visuals/OBJECTS/items/plata.png")
 			}
 			else{
-				valor = 300
-				image = "Visuals/OBJECTS/items/oro.png"
+				self.valor(300)
+				self.image("Visuals/OBJECTS/items/oro.png")
 			}
 		}
 	}
@@ -88,9 +88,6 @@ class Monedas inherits Objetos{
 class Sorpresas inherits Objetos{
 	override method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
 	
-	override method aparecer(){
-		game.addVisual( new Sorpresas(position = self.calcularPosicionAleatoria()) )
-	}
 	override method esSorpresa() = true
 	
 	method efecto(){
@@ -128,14 +125,20 @@ object colores {
 
 object calcularPosAleatoria{
 	method calcularPosAleatoriaLibre(){
-		const posicionAleatoria
+		const posicionAleatoria=self.calcularPosicionAleatoria()
 		const esP = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esArma() || o.esMoneda() })
 		if(esP)
 			self.calcularPosAleatoriaLibre()
 		else
 			return posicionAleatoria
 	}
+	method calcularPosicionAleatoria() {
+		const x = (0 .. game.width()-1).anyOne()
+		const y = (0 .. game.height()-1).anyOne()
+		return game.at(x,y)
+	}
 }
+
 
 
 
