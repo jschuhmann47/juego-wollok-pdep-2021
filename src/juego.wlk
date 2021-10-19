@@ -2,12 +2,13 @@ import wollok.game.*
 import personaje.*
 import paredes.*
 import enemigo.*
-import sorpresasYVidas.*
-import monedas.*
+import puntosYVidas.*
 import objetos.*
 
 
 object juego {
+	const enemigo = new EnemigoTerrestre( position = posAleatoria.calcularLibre() )
+	const fantasma = new Fantasma ( position = posAleatoria.calcularLibre() )
 	
 	method jugar() {
 		self.configurarPantalla()
@@ -27,9 +28,10 @@ object juego {
 	
 	method agregarPersonajes() {
 		game.addVisual(personaje)
-		game.addVisual(enemigo)
 		game.addVisual(vida)
 		game.addVisual(puntos)
+		game.addVisual(enemigo)
+		game.addVisual(fantasma)
 	}
 	
 	method definirControles() {
@@ -46,28 +48,21 @@ object juego {
 	}
 	
 	method definirEventos() {
-		game.onTick(2000, "movimiento", { enemigo.perseguir() })
-		game.onTick(10000, "aparece sorpresa", { 
-			self.spawnear(new Sorpresas(position = calcularPosAleatoria.calcularPosAleatoriaLibre()))
-		})
-		game.onTick(10000, "aparece arma", { self.spawnear(new ArmasMelee(position = calcularPosAleatoria.calcularPosAleatoriaLibre())) })
-		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = calcularPosAleatoria.calcularPosAleatoriaLibre()))	})
+		game.onTick(4000, "movimiento fantasma", {fantasma.perseguir()})
+		game.onTick(2000, "movimiento enemigo terrestre", {enemigo.perseguir()})
+		
+		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
+		game.onTick(10000, "aparece arma", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
+		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = posAleatoria.calcularLibre() )) })
 		
 		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
 	}
 	
 	method spawnear(objeto){
-		objeto.aparecer(objeto)
+		objeto.aparecer()
+		
+		game.schedule(7000, {objeto.desaparecer()})
 	}
+	
 }
-
-//object aparecer{
-//	method aparecerArma(posicionAleatoria)=game.addVisual( new ArmasMelee(position = posicionAleatoria) )
-//	method aparecerSorpresa(posicionAleatoria)=game.addVisual( new Sorpresa(position = posicionAleatoria) )
-//	method aparecerMoneda(posicionAleatoria){
-//			const nuevaMoneda = new Moneda(position = posicionAleatoria)
-//			nuevaMoneda.calcularValorMoneda()
-//			game.addVisual(nuevaMoneda)
-//	}
-//}

@@ -2,67 +2,19 @@ import wollok.game.*
 import paredes.*
 import personaje.*
 
-object enemigo{
-	const posicionInicial = game.at(1,1)
-	var property position = posicionInicial
+class EnemigoTerrestre{
+	var property position = game.at(1,1)
 	var direccion = abajoEnemigo
 	var property direccionChoque = abajoEnemigo
 	
-	var xEnemigo = self.position().x()
-	var yEnemigo = self.position().y()
-	
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
-		
-	method perseguir(){
-//		xEnemigo = self.position().x()
-//		yEnemigo = self.position().y()
-//		
-//		const xPersonaje = personaje.position().x()
-//		const yPersonaje = personaje.position().y()
-//		if(xEnemigo != xPersonaje){
-//			if(xEnemigo > xPersonaje){
-//				xEnemigo --
-//				direccion = izquierdaEnemigo}
-//			else{
-//				xEnemigo ++
-//				direccion = derechaEnemigo}
-//		}
-//		else if(yEnemigo != yPersonaje){
-//			if(yEnemigo > yPersonaje){
-//				yEnemigo --
-//				direccion = abajoEnemigo}
-//			else{
-//				yEnemigo ++
-//				direccion = arribaEnemigo}
-//		}
-//		
-//		const posicionTemporal = game.at(xEnemigo, yEnemigo)
-//		
-//		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
-//		if (esP)
-//			self.colisionPared()
-//		else
-//			position = posicionTemporal
-			const xPersonaje = personaje.position().x()
-			const yPersonaje = personaje.position().y()
-			
-			if(xEnemigo!=xPersonaje){
-				if(xEnemigo>xPersonaje)
-					xEnemigo --
-				else 
-					xEnemigo ++
-			}
-			if(yEnemigo!=yPersonaje){
-				if(yEnemigo>yPersonaje)
-					yEnemigo --
-				else 
-					yEnemigo ++
-			}
-		position = game.at(xEnemigo,yEnemigo)
-	}
 	
 	method mirarHacia(nuevaDireccion) {
 		direccion = nuevaDireccion
+	}
+	
+	method perseguir(){
+		perseguir.accion(self)
 	}
 
 	method avanzar(direc) {
@@ -111,41 +63,76 @@ object enemigo{
 	method esMoneda() = false
 	
 	method quedarseQuieto(){
-		game.removeTickEvent ("movimiento")
-		game.schedule (5000, { game.onTick(1000, "movimiento", { self.perseguir() }) })
+		game.removeTickEvent ("movimiento enemigo terrestre")
+		game.schedule (5000, { game.onTick(1000, "movimiento enemigo terrestre", { self.perseguir() }) })
 	}
-	
-//	method avanzarEnemigo(){
-//		xEnemigo = self.position().x()
-//		yEnemigo = self.position().y()
-//		xPersonaje = personaje.position().x()
-//		yPersonaje = personaje.position().y()
-//		
-//		var distanciaInicial = vectores.obtenerDistancia(xEnemigo,yEnemigo,xPersonaje,yPersonaje)
-//		//si lo muevo para arriba que calcule
-//		if(vectores.obtenerDistancia(xEnemigo,yEnemigo + 1,xPersonaje,yPersonaje) < distanciaInicial){
-//			self.arriba()
-//		}else if(vectores.obtenerDistancia(xEnemigo,yEnemigo - 1,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
-//			self.abajo()
-//		}else if(vectores.obtenerDistancia(xEnemigo + 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //derecha
-//			self.derecha()
-//		}else if(vectores.obtenerDistancia(xEnemigo - 1,yEnemigo,xPersonaje,yPersonaje) < distanciaInicial){ //abajo
-//			self.izquierda()
-//		} 
-//	}
 	
 }
 
-/*object vectores{
-	method obtenerDistancia(xEnemigo,yEnemigo,xPersonaje,yPersonaje){
-		var rX = 0
-		var rY = 0
-		rX = xEnemigo - xPersonaje
-		rY = yEnemigo - yPersonaje
-		
-		return (rX ** 2 + rY ** 2)** 0.5 
+class Fantasma{
+	var property position = game.at(1,1)
+	method image() = "Visuals/CHARACTERS/npc/frog/frog1.png"
+	
+	method perseguir(){
+		perseguir.accion(self)
 	}
-}*/
+	method colisionPared(){}
+	method tocarEnemigo(_){}
+	
+	method esEnemigo() = true	
+	method esPared() = false
+	method esPersonaje() = false
+	method esSorpresa() = false
+	method esArma() = false
+	method esMoneda() = false
+}
+
+object perseguir{	
+	method comparar(nroAux1, nroAux2){
+		var nroA = nroAux1
+		var nroB = nroAux2
+		if (nroA > nroB){
+			nroA--}
+		else{
+			nroA++}
+		
+		return game.at(nroA, nroB)
+	}
+	
+	method accion(enemigo){
+		const xPersonaje = personaje.position().x()
+		const yPersonaje = personaje.position().y()
+		var xEnemigo = enemigo.position().x()
+		var yEnemigo = enemigo.position().y()
+		var posicionTemporal
+		
+		/*if (xEnemigo != xPersonaje)
+			posicionTemporal = self.comparar(xEnemigo, xPersonaje)
+		else
+			posicionTemporal = self.comparar(yEnemigo, yPersonaje)*/
+			
+		if(xEnemigo!=xPersonaje){
+			if(xEnemigo>xPersonaje)
+				xEnemigo --
+			else 
+				xEnemigo ++
+		}
+		else if(yEnemigo!=yPersonaje){
+			if(yEnemigo>yPersonaje)
+				yEnemigo --
+			else 
+				yEnemigo ++
+		}
+		posicionTemporal = game.at(xEnemigo, yEnemigo)
+		
+		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
+		if (esP)
+			enemigo.colisionPared()
+		else
+			enemigo.position(posicionTemporal)
+	}		
+	
+}
 
 object arribaEnemigo {
 	method siguientePosicion(posicion) = posicion.up(1)

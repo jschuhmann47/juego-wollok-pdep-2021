@@ -2,8 +2,7 @@ import wollok.game.*
 import paredes.*
 import personaje.*
 
-
-class Enemigo{
+object fantasma{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
 	var direccion = abajo

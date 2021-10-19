@@ -1,7 +1,7 @@
 import wollok.game.*
 import personaje.*
 import enemigo.*
-import sorpresasYVidas.*
+import puntosYVidas.*
 import juego.*
 
 
@@ -13,56 +13,54 @@ class Objetos {
 	method esSorpresa() = false
 	method esMoneda() = false
 	method image()
-	method position()=position
 	
-	method calcularPosicionAleatoria() {
-		return calcularPosAleatoria.calcularPosAleatoriaLibre()
-	}	
-	//method esObjeto() = true
-	
-	method aparecer(obj){
-		game.addVisual(obj)
+	method aparecer(){
+		game.addVisual(self)
 	}
-	method tocarPersonaje(param)
+	
 	method desaparecer(){
-		game.removeVisual(self)
+		if (game.hasVisual(self))
+			game.removeVisual(self)
 	}
+	
+	method tocarPersonaje(param)
+	
 	method tocarEnemigo(enem) {
-		game.removeVisual(enem) //la mayoria hace esto, dps vemos
+		game.removeVisual(self)
 	}
 	
 }
 
 
 class ArmasMelee inherits Objetos{
-		
 	override method image() = "Visuals/OBJECTS/items/sword.png"
-	
 	override method esArma() = true
 	
 	override method tocarPersonaje(pers){
 		pers.usarArma(self)
 	}
+	override method tocarEnemigo(enem){
+		game.removeVisual(enem)
+	}
 	
 }
+
+object armaVacia{}
 
 class Monedas inherits Objetos{
 	var property image = "Visuals/OBJECTS/items/bronce.png"
 	var property valor = 0
 	override method esMoneda() = true
 	
+	override method aparecer(){
+		self.calcularValorMoneda()
+		super()
+	}
 	
 	override method tocarPersonaje(pers){
 		puntos.aumentarPuntuacion(self.valor())
 		game.removeVisual(self)
 	}
-	
-	override method aparecer(obj){
-		obj.calcularValorMoneda()
-		game.addVisual(obj)
-		
-	}
-	
 	
 	method calcularValorMoneda(){
 		const tipoMoneda = 0.randomUpTo(10)
@@ -87,26 +85,29 @@ class Monedas inherits Objetos{
 
 class Sorpresas inherits Objetos{
 	override method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
-	
 	override method esSorpresa() = true
 	
 	method efecto(){
-		const nroSorpresa = (1 .. 4).anyOne()
+		const nroSorpresa = (1 .. 6).anyOne()
 		
-		if (nroSorpresa == 0){
-			game.say(personaje, "Ups! Game over :(")
-			personaje.morir()}
-		else if (nroSorpresa == 1){
-			game.say(personaje, "Bien! El enemigo se queda quieto por 5 segundos :D")
-			enemigo.quedarseQuieto()}
+		if (nroSorpresa == 1){
+			sorpresa1.aplicar()
+		}
 		else if (nroSorpresa == 2){
-			game.say(personaje, "Ups! Perdiste una vida :(")
-			personaje.perderVida()}
+			sorpresa2.aplicar()
+		}
 		else if (nroSorpresa == 3){
-			game.say(personaje, "Bien! Ganaste una vida :D")
-			personaje.ganarVida()}
+			sorpresa3.aplicar()
+		}
+		else if (nroSorpresa == 4){
+			sorpresa4.aplicar()
+		}
+		else if (nroSorpresa == 5){
+			sorpresa5.aplicar()
+		}
 		else
-			game.say(personaje, "Bueno, esta sorpresa no hace nada :p")
+			sorpresa6.aplicar()
+			
 		game.removeVisual(self)
 	}
 	
@@ -116,32 +117,62 @@ class Sorpresas inherits Objetos{
 	
 }
 
-object colores {
-	const property blanco = "FFFFFFFF"
-	const property rojo = "FF0000FF"
+object sorpresa1{
+	method aplicar(){
+		game.say(personaje, "Perdí 500 puntos :(")
+		puntos.disminuirPuntuacion(500)
 	}
-	
-	
+}
 
-object calcularPosAleatoria{
-	method calcularPosAleatoriaLibre(){
-		const posicionAleatoria=self.calcularPosicionAleatoria()
-		const esP = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esArma() || o.esMoneda() })
-		if(esP)
-			self.calcularPosAleatoriaLibre()
+object sorpresa2{
+	method aplicar(){
+		game.say(personaje, "Gané 500 puntos :D")
+		puntos.aumentarPuntuacion(500)
+	}
+}
+
+object sorpresa3{
+	method aplicar(){
+		game.say(personaje, "El enemigo se queda quieto por 5 segundos :D")
+		enemigo.quedarseQuieto()
+	}
+}
+
+object sorpresa4{
+	method aplicar(){
+		game.say(personaje, "Perdí una vida :(")
+		personaje.perderVida()
+	}
+}
+
+object sorpresa5{
+	method aplicar(){
+		game.say(personaje, "Gané una vida :D")
+		personaje.ganarVida()
+	}
+}
+
+object sorpresa6{
+	method aplicar(){
+		game.say(personaje, "Bueno, esta sorpresa no hace nada :p")
+	}
+}
+
+	
+object posAleatoria{
+	method calcularLibre(){
+		const posicionAleatoria = self.calcularPosicionAleatoria()
+		const posOcupada = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esArma() || o.esMoneda() || o.esSorpresa() })
+		if(posOcupada)
+			self.calcularLibre()
 		else
 			return posicionAleatoria
 	}
+	
 	method calcularPosicionAleatoria() {
 		const x = (0 .. game.width()-1).anyOne()
 		const y = (0 .. game.height()-1).anyOne()
 		return game.at(x,y)
 	}
+	
 }
-
-
-
-
-	
-	
-

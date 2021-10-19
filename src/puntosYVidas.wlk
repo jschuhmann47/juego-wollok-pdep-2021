@@ -4,6 +4,11 @@ import paredes.*
 import enemigo.*
 import objetos.*
 
+object colores {
+	const property blanco = "FFFFFFFF"
+	const property rojo = "FF0000FF"
+}
+
 object vida{
 	const property position = game.at(9, 19)
 	method image() = "Visuals/OBJECTS/items/paredConCorazon.png"
@@ -23,6 +28,9 @@ object puntos{
 	method text() = puntuacion.toString()
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
+	}
+	method disminuirPuntuacion(puntos){
+		puntuacion = (puntuacion-puntos).max(0)
 	}
 	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
 	

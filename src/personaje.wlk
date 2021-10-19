@@ -1,5 +1,6 @@
 import wollok.game.*
 import paredes.*
+import objetos.*
 
 object personaje{
 	const posicionInicial = game.center()
@@ -7,12 +8,12 @@ object personaje{
 	var direccion = abajo
 	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
 	var property vidas = 3
-	var property armaActual = null
+	var property armaActual = armaVacia
 
 	method caminar(direcc){
-		direccion=direcc
+		direccion = direcc
 		position = self.siguientePosicion()
-		if (armaActual != null)
+		if (armaActual != armaVacia)
 			self.usarArma(armaActual)
 	}
 
@@ -27,6 +28,7 @@ object personaje{
 	method esPersonaje() = true
 	method esArma() = false
 	method esMoneda() = false
+	method esSorpresa() = false
 	
 	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo, solo tiene que entender el mensaje
 	
@@ -41,7 +43,7 @@ object personaje{
 	
 	method soltarArma(){
 		game.removeVisual(armaActual)
-		armaActual = null
+		armaActual = armaVacia
 	}
 	
 	method morir(){

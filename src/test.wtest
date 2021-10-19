@@ -1,4 +1,4 @@
-import personaje.*
+/*import personaje.*
 import wollok.game.*
 
 test "la posicion inicial del personaje es 4, 4" {
@@ -31,4 +31,4 @@ test "al decirle a un personaje que se mueva hacia arriba, su posicion en Y aume
 	
 	assert.equals(game.at(4, 5), personaje.position())
 	assert.equals("Visuals/CHARACTERS/player/hero-arriba.png", personaje.image())
-}
+}*/
