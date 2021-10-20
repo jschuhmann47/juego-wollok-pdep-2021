@@ -7,15 +7,13 @@ import objetos.*
 
 
 object juego {
-	const enemigo = new EnemigoTerrestre( position = posAleatoria.calcularLibre() )
-	const fantasma = new Fantasma ( position = posAleatoria.calcularLibre() )
 	
 	method jugar() {
 		self.configurarPantalla()
+		nivel1.cargar()
 		self.agregarPersonajes()
 		self.definirControles()
 		self.definirEventos()
-		nivel1.cargar()
 		game.start()
 	}
 	
@@ -27,11 +25,13 @@ object juego {
 	}
 	
 	method agregarPersonajes() {
+		const fantasma = new Fantasma ( position = posAleatoria.calcularLibre() )
 		game.addVisual(personaje)
 		game.addVisual(vida)
 		game.addVisual(puntos)
-		//game.addVisual(enemigo)
 		game.addVisual(fantasma)
+		game.addVisual(armaDisparo)
+		game.onTick(1000, "movimiento fantasma", {fantasma.perseguir()})
 	}
 	
 	method definirControles() {
@@ -49,15 +49,26 @@ object juego {
 	}
 	
 	method definirEventos() {
-		game.onTick(1000, "movimiento fantasma", {fantasma.perseguir()})
-		game.onTick(2000, "movimiento enemigo terrestre", {enemigo.perseguir()})
-		self.spawnear(armaDisparo)
 		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
 		game.onTick(10000, "aparece espada", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
 		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = posAleatoria.calcularLibre() )) })
+		game.onTick(10000, "aparece obstáculo", {self.nuevoObstaculo()})
+		game.onTick(5000, "aparece enemigo", {self.nuevoEnemigoTerrestre()})
 		
-		//game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
+	}
+	
+	method nuevoEnemigoTerrestre(){
+		const nuevoEnemigoTerrestre = new EnemigoTerrestre (position = posAleatoria.calcularLibre())
+		self.spawnear(nuevoEnemigoTerrestre)
+		game.onCollideDo(nuevoEnemigoTerrestre, { objeto => objeto.tocarEnemigo(nuevoEnemigoTerrestre) })
+		game.onTick(3000, "movimiento enemigo terrestre", {nuevoEnemigoTerrestre.perseguir()})
+	}
+	
+	method nuevoObstaculo(){
+		const nuevoObstaculo = new Obstaculo (position = posAleatoria.calcularLibre())
+		self.spawnear(nuevoObstaculo)
+		game.onCollideDo(nuevoObstaculo, { objeto => objeto.colisionPared() })
 	}
 	
 	method spawnear(objeto){

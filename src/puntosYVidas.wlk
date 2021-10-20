@@ -35,5 +35,6 @@ object puntos{
 	}
 	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
 	method esPared() = true
+	method tocarEnemigo(){}
 	
 }

@@ -8,11 +8,14 @@ object armaVacia{}
 
 class Objetos {
 	var property position
-	method esArma() = false
 	method esPared() = false
 	method esPersonaje() = false
+	method esEnemigo() = false
+	/*method esArma() = false
 	method esSorpresa() = false
 	method esMoneda() = false
+	method esObstaculo() = false*/
+	method esObjeto() = true
 	method image()
 	
 	method aparecer(){
@@ -27,6 +30,10 @@ class Objetos {
 	method tocarPersonaje(param)
 	
 	method tocarEnemigo(enem) {
+		game.removeVisual(self)
+	}
+	
+	method colisionPared(){
 		game.removeVisual(self)
 	}
 	
@@ -58,11 +65,6 @@ object armaDisparo{
 		pers.usarArma(self)
 	}
 	method tocarEnemigo(enem){}
-	method aparecer(){
-		game.addVisual(self)
-	}
-	
-	method desaparecer(){}
 	
 	method colisionPared(){}
 }
@@ -195,11 +197,19 @@ object sorpresa6{
 	}
 }
 
-	
+
+class Obstaculo inherits Objetos{
+	const nroObstaculo = (1 .. 3).anyOne()
+	override method image() = "Visuals/OBJECTS/blocks/obstaculo" + nroObstaculo.toString() + ".png"
+	override method esObstaculo() = true
+	override method tocarPersonaje(param){}
+}
+
+
 object posAleatoria{
 	method calcularLibre(){
 		const posicionAleatoria = self.calcularPosicionAleatoria()
-		const posOcupada = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esArma() || o.esMoneda() || o.esSorpresa() })
+		const posOcupada = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esObjeto() })
 		if(posOcupada)
 			self.calcularLibre()
 		else

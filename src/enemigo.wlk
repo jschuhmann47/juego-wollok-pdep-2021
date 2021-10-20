@@ -44,14 +44,22 @@ class EnemigoTerrestre{
 	method esEnemigo() = true	
 	method esPared() = false
 	method esPersonaje() = false
-	method esSorpresa() = false
+	method esObjeto() = false
+	/*method esSorpresa() = false
 	method esArma() = false
-	method esMoneda() = false
+	method esMoneda() = false*/
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento enemigo terrestre")
 		game.schedule (5000, { game.onTick(1000, "movimiento enemigo terrestre", { self.perseguir() }) })
 	}
+	
+	method aparecer(){
+		game.addVisual(self)
+	}
+	method desaparecer(){}
+	
+	method tocarEnemigo(_){}
 	
 }
 
@@ -72,9 +80,10 @@ class Fantasma{
 	method esEnemigo() = true	
 	method esPared() = false
 	method esPersonaje() = false
-	method esSorpresa() = false
+	method esObstaculo() = false
+	/*method esSorpresa() = false
 	method esArma() = false
-	method esMoneda() = false
+	method esMoneda() = false*/
 }
 
 object perseguir{	
