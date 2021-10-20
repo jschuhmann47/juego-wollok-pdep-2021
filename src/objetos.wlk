@@ -4,6 +4,7 @@ import enemigo.*
 import puntosYVidas.*
 import juego.*
 
+object armaVacia{}
 
 class Objetos {
 	var property position
@@ -42,10 +43,44 @@ class ArmasMelee inherits Objetos{
 	override method tocarEnemigo(enem){
 		game.removeVisual(enem)
 	}
+	override method desaparecer(){}
 	
 }
 
-object armaVacia{}
+object armaDisparo{
+	var property position = posAleatoria.calcularLibre()
+	var property direccion = izquierda
+	method image() = "Visuals/OBJECTS/items/Pistola.png"
+	method esArma() = true
+	
+	method siguientePosicion() = direccion.siguientePosicion(position)
+	method tocarPersonaje(pers){
+		pers.usarArma(self)
+	}
+	method tocarEnemigo(enem){}
+	method aparecer(){
+		game.addVisual(self)
+	}
+	
+	method desaparecer(){}
+}
+
+object disparo{
+	var property position
+	var property direccion
+	method image() = "Visuals/OBJECTS/items/bala.png"
+	
+	method avanzar(){
+		position = direccion.siguientePosicion(position)
+	}
+	method colisionPared(){
+		game.removeVisual(self)
+	}
+	method tocarEnemigo(enem){
+		game.removeVisual(enem)
+	}
+	
+}	
 
 class Monedas inherits Objetos{
 	var property image = "Visuals/OBJECTS/items/bronce.png"

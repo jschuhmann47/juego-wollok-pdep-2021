@@ -20,6 +20,7 @@ object vida{
 	method esSorpresa() = false
 	method esArma() = false
 	method esMoneda() = false
+	method esPared() = true
 }
 
 object puntos{
@@ -33,5 +34,6 @@ object puntos{
 		puntuacion = (puntuacion-puntos).max(0)
 	}
 	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
+	method esPared() = true
 	
 }

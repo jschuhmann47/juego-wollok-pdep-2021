@@ -5,7 +5,7 @@ import objetos.*
 object personaje{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
-	var direccion = abajo
+	var property direccion = abajo
 	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
 	var property vidas = 3
 	var property armaActual = armaVacia
@@ -41,6 +41,17 @@ object personaje{
 		armaActual.position(self.siguientePosicion())
 	}
 	
+	method disparar(){
+		if (armaActual == armaDisparo){
+			game.addVisual(disparo)
+			disparo.direccion(self.direccion())
+			disparo.position(armaActual.siguientePosicion())
+			game.onTick(1000, "avanzar disparo", {disparo.avanzar()})
+		}
+		else
+			game.say(self, "No tenemos arma para disparar")
+	}
+		
 	method soltarArma(){
 		game.removeVisual(armaActual)
 		armaActual = armaVacia

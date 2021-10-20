@@ -3,9 +3,8 @@ import paredes.*
 import personaje.*
 
 class EnemigoTerrestre{
-	var property position = game.at(1,1)
+	var property position
 	var direccion = abajoEnemigo
-	var property direccionChoque = abajoEnemigo
 	
 	method image() = "Visuals/CHARACTERS/player/hero-derecha.png"
 	
@@ -16,31 +15,15 @@ class EnemigoTerrestre{
 	method perseguir(){
 		perseguir.accion(self)
 	}
-
-	method avanzar(direc) {
-		const posicionTemporal = self.consultarSiguientePosicion(direc)
-		
-		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
-		if (esP)
-			self.colisionPared()
-		else
-			position = posicionTemporal
-	}
 	
 	method tocarPersonaje(pers){
 		game.say(self, "Perdiste una vida")
 		pers.perderVida()
 	}
 	
-	method siguientePosicion() = direccion.siguientePosicion(position)
-	method consultarSiguientePosicion(direc) {
-		const posicionTemporal = position
-		return direc.siguientePosicion(posicionTemporal)
-	}
-	
-	method colisionPared() {
-			direccionChoque = direccion
-			//position = direccion.direccionOpuesta(position)
+	/*method colisionPared() {
+		direccionChoque = direccion
+
 			if(direccionChoque == arribaEnemigo){
 				self.mirarHacia(derechaEnemigo)
 			}else if(direccionChoque == derechaEnemigo){
@@ -51,8 +34,11 @@ class EnemigoTerrestre{
 				self.mirarHacia(arribaEnemigo)
 			}
 			
-			self.avanzar(direccion)
-			self.avanzar(direccionChoque)
+	}*/
+	
+	method colisionPared(){
+		position = direccion.retroceder(position)
+		//self.mirarHacia(direccion.direcOpuesta())
 	}
 	
 	method esEnemigo() = true	
@@ -70,14 +56,18 @@ class EnemigoTerrestre{
 }
 
 class Fantasma{
-	var property position = game.at(1,1)
-	method image() = "Visuals/CHARACTERS/npc/frog/frog1.png"
+	var property position
+	method image() = "Visuals/CHARACTERS/enemigos/fantasma.png"
 	
 	method perseguir(){
 		perseguir.accion(self)
 	}
 	method colisionPared(){}
 	method tocarEnemigo(_){}
+	method tocarPersonaje(pers){
+		game.say(self, "Perdiste una vida")
+		pers.perderVida()
+	}
 	
 	method esEnemigo() = true	
 	method esPared() = false
@@ -104,12 +94,12 @@ object perseguir{
 		const yPersonaje = personaje.position().y()
 		var xEnemigo = enemigo.position().x()
 		var yEnemigo = enemigo.position().y()
-		var posicionTemporal
+		var pos
 		
 		/*if (xEnemigo != xPersonaje)
-			posicionTemporal = self.comparar(xEnemigo, xPersonaje)
-		else
-			posicionTemporal = self.comparar(yEnemigo, yPersonaje)*/
+			pos = self.comparar(xEnemigo, xPersonaje)
+		else if (yEnemigo != yPersonaje)
+			pos = self.comparar(yEnemigo, yPersonaje)*/
 			
 		if(xEnemigo!=xPersonaje){
 			if(xEnemigo>xPersonaje)
@@ -123,33 +113,33 @@ object perseguir{
 			else 
 				yEnemigo ++
 		}
-		posicionTemporal = game.at(xEnemigo, yEnemigo)
-		
-		const esP = game.getObjectsIn( posicionTemporal ).any({ pa => pa.esPared()})
-		if (esP)
-			enemigo.colisionPared()
-		else
-			enemigo.position(posicionTemporal)
+		pos = game.at(xEnemigo, yEnemigo)
+		enemigo.position(pos)
 	}		
 	
 }
 
 object arribaEnemigo {
 	method siguientePosicion(posicion) = posicion.up(1)
-	method direccionOpuesta(posicion) = posicion.down(1)	
+	method retroceder(posicion)	= posicion.down(1)
+	method direcOpuesta() = abajoEnemigo
 //	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
 }
 object izquierdaEnemigo {
 	method siguientePosicion(posicion) = posicion.left(1)
-	method direccionOpuesta(posicion) = posicion.right(1)
+	method retroceder(posicion) = posicion.right(1)
+	method direcOpuesta() = derechaEnemigo
 //	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
 }
 object derechaEnemigo {
 	method siguientePosicion(posicion) = posicion.right(1)
-	method direccionOpuesta(posicion) = posicion.left(1)
+	method retroceder(posicion) = posicion.left(1)
+	method direcOpuesta() = izquierdaEnemigo
 //	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
 }
 object abajoEnemigo {
 	method siguientePosicion(posicion) = posicion.down(1)
-	method direccionOpuesta(posicion) = posicion.up(1)
+	method retroceder(posicion) = posicion.up(1)
+	method direcOpuesta() = arribaEnemigo
+//	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
 }

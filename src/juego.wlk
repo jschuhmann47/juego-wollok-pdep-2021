@@ -30,7 +30,7 @@ object juego {
 		game.addVisual(personaje)
 		game.addVisual(vida)
 		game.addVisual(puntos)
-		game.addVisual(enemigo)
+		//game.addVisual(enemigo)
 		game.addVisual(fantasma)
 	}
 	
@@ -40,6 +40,7 @@ object juego {
 		keyboard.right().onPressDo { personaje.caminar(derecha) }
 		keyboard.left().onPressDo { personaje.caminar(izquierda) }
 		keyboard.s().onPressDo { personaje.soltarArma() }
+		keyboard.d().onPressDo { personaje.disparar() }
 	
 		keyboard.q().onPressDo { game.say(personaje, "basta chicos") }
 		keyboard.w().onPressDo { game.say(personaje, "mamaaa cortaste toda la loz") }
@@ -48,14 +49,14 @@ object juego {
 	}
 	
 	method definirEventos() {
-		game.onTick(4000, "movimiento fantasma", {fantasma.perseguir()})
+		game.onTick(1000, "movimiento fantasma", {fantasma.perseguir()})
 		game.onTick(2000, "movimiento enemigo terrestre", {enemigo.perseguir()})
-		
+		self.spawnear(armaDisparo)
 		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
-		game.onTick(10000, "aparece arma", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
+		game.onTick(10000, "aparece espada", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
 		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = posAleatoria.calcularLibre() )) })
 		
-		game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
+		//game.onCollideDo(enemigo, { objeto => objeto.tocarEnemigo(enemigo) })
 		game.onCollideDo(personaje, { objeto => objeto.tocarPersonaje(personaje) })
 	}
 	
