@@ -67,6 +67,9 @@ object armaDisparo{
 	method tocarEnemigo(enem){}
 	
 	method colisionPared(){}
+	method imagenNueva(palabra){
+		image="Visuals/CHARACTERS/player/pistola-"+palabra.toString()+".png" //deberia andar pero pone que no existe
+	}
 }
 
 object disparo{
@@ -82,6 +85,9 @@ object disparo{
 	}
 	method tocarEnemigo(enem){
 		game.removeVisual(enem)
+	}
+	method imagenNueva(palabra){
+		image="Visuals/CHARACTERS/player/bala-"+palabra.toString()+".png"
 	}
 	
 }	
@@ -149,6 +155,7 @@ class Sorpresas inherits Objetos{
 			
 		game.removeVisual(self)
 	}
+	
 	
 	override method tocarPersonaje(pers){
 		pers.agarrarSorpresa(self)

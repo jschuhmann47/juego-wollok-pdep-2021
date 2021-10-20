@@ -84,6 +84,11 @@ object personaje{
 	method volverAlInicio(){
 		position = posicionInicial
 	}
+	
+	method imagenNueva(palabra){
+		image="Visuals/CHARACTERS/player/hero-"+palabra.toString()+".png"
+	}
+	
 
 }
 
@@ -101,12 +106,7 @@ object arriba {
 	method retroceder(posicion) = posicion.down(1)
 	
 	method determinarImagen(elemento){
-		if (elemento == personaje)
-			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
-		else if (elemento == armaDisparo)
-			elemento.image("Visuals/OBJECTS/items/pistola-arriba.png")
-		else if (elemento == disparo)
-			elemento.image("Visuals/OBJECTS/items/bala-arriba.png")
+		elemento.imagenNueva(self)
 	}
 }
 object izquierda {
@@ -114,13 +114,8 @@ object izquierda {
 	method retroceder(posicion) = posicion.right(1)
 	
 	method determinarImagen(elemento){
-		if (elemento == personaje)
-			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
-		else if (elemento == armaDisparo)
-			elemento.image("Visuals/OBJECTS/items/pistola-izquierda.png")
-		else if (elemento == disparo)
-			elemento.image("Visuals/OBJECTS/items/bala-izquierda.png")
-	}
+		elemento.imagenNueva(self)
+		}
 	
 }
 object derecha {
@@ -128,12 +123,7 @@ object derecha {
 	method retroceder(posicion) = posicion.left(1)
 	
 	method determinarImagen(elemento){
-		if (elemento == personaje)
-			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
-		else if (elemento == armaDisparo)
-			elemento.image("Visuals/OBJECTS/items/pistola-derecha.png")
-		else if (elemento == disparo)
-			elemento.image("Visuals/OBJECTS/items/bala-derecha.png")
+		elemento.imagenNueva(self)
 	}
 }
 object abajo {
@@ -141,11 +131,6 @@ object abajo {
 	method retroceder(posicion) = posicion.up(1)
 
 	method determinarImagen(elemento){
-		if (elemento == personaje)
-			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
-		else if (elemento == armaDisparo)
-			elemento.image("Visuals/OBJECTS/items/pistola-abajo.png")
-		else if (elemento == disparo)
-			elemento.image("Visuals/OBJECTS/items/bala-abajo.png")
+		elemento.imagenNueva(self)
 	}
 }
