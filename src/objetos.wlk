@@ -50,7 +50,7 @@ class ArmasMelee inherits Objetos{
 object armaDisparo{
 	var property position = posAleatoria.calcularLibre()
 	var property direccion = izquierda
-	method image() = "Visuals/OBJECTS/items/Pistola.png"
+	var property image = "Visuals/OBJECTS/items/pistola-derecha.png"
 	method esArma() = true
 	
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -63,12 +63,14 @@ object armaDisparo{
 	}
 	
 	method desaparecer(){}
+	
+	method colisionPared(){}
 }
 
 object disparo{
 	var property position
 	var property direccion
-	method image() = "Visuals/OBJECTS/items/bala.png"
+	var property image = "Visuals/OBJECTS/items/bala-derecha.png"
 	
 	method avanzar(){
 		position = direccion.siguientePosicion(position)

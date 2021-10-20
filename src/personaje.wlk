@@ -13,14 +13,17 @@ object personaje{
 	method caminar(direcc){
 		direccion = direcc
 		position = self.siguientePosicion()
-		if (armaActual != armaVacia)
+		if (armaActual != armaVacia){
+			if (armaActual == armaDisparo)
+				modificarDireccion.aplicar(self.direccion(), armaDisparo)
 			self.usarArma(armaActual)
+		}
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
 	method colisionPared() {
-		position = direccion.direccionOpuesta(position)	
+		position = direccion.retroceder(position)	
 	}
 	
 	method esEnemigo() = false
@@ -43,9 +46,11 @@ object personaje{
 	
 	method disparar(){
 		if (armaActual == armaDisparo){
-			game.addVisual(disparo)
-			disparo.direccion(self.direccion())
+			modificarDireccion.aplicar(self.direccion(), armaDisparo)
+			modificarDireccion.aplicar(self.direccion(), disparo)
 			disparo.position(armaActual.siguientePosicion())
+			if(!game.hasVisual(disparo))
+				game.addVisual(disparo)
 			game.onTick(1000, "avanzar disparo", {disparo.avanzar()})
 		}
 		else
@@ -53,7 +58,9 @@ object personaje{
 	}
 		
 	method soltarArma(){
-		game.removeVisual(armaActual)
+		if (armaActual != armaDisparo)
+			game.removeVisual(armaActual)
+			
 		armaActual = armaVacia
 	}
 	
@@ -80,24 +87,65 @@ object personaje{
 
 }
 
+object modificarDireccion{
+	method aplicar(direccion, elemento){
+		elemento.direccion(direccion)
+		direccion.determinarImagen(elemento)
+	}
+	
+	
+}
 
 object arriba {
 	method siguientePosicion(posicion) = posicion.up(1)	
-	method direccionOpuesta(posicion) = posicion.down(1)	
-//	method imagen() = "Visuals/CHARACTERS/player/hero-arriba.png"
+	method retroceder(posicion) = posicion.down(1)
+	
+	method determinarImagen(elemento){
+		if (elemento == personaje)
+			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
+		else if (elemento == armaDisparo)
+			elemento.image("Visuals/OBJECTS/items/pistola-arriba.png")
+		else if (elemento == disparo)
+			elemento.image("Visuals/OBJECTS/items/bala-arriba.png")
+	}
 }
 object izquierda {
 	method siguientePosicion(posicion) = posicion.left(1)
-	method direccionOpuesta(posicion) = posicion.right(1)
-//	method imagen() = "Visuals/CHARACTERS/player/hero-izquierda.png"
+	method retroceder(posicion) = posicion.right(1)
+	
+	method determinarImagen(elemento){
+		if (elemento == personaje)
+			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
+		else if (elemento == armaDisparo)
+			elemento.image("Visuals/OBJECTS/items/pistola-izquierda.png")
+		else if (elemento == disparo)
+			elemento.image("Visuals/OBJECTS/items/bala-izquierda.png")
+	}
+	
 }
 object derecha {
 	method siguientePosicion(posicion) = posicion.right(1)
-	method direccionOpuesta(posicion) = posicion.left(1)
-//	method imagen() = "Visuals/CHARACTERS/player/hero-derecha.png"
+	method retroceder(posicion) = posicion.left(1)
+	
+	method determinarImagen(elemento){
+		if (elemento == personaje)
+			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
+		else if (elemento == armaDisparo)
+			elemento.image("Visuals/OBJECTS/items/pistola-derecha.png")
+		else if (elemento == disparo)
+			elemento.image("Visuals/OBJECTS/items/bala-derecha.png")
+	}
 }
 object abajo {
 	method siguientePosicion(posicion) = posicion.down(1)
-	method direccionOpuesta(posicion) = posicion.up(1)
-//	method imagen() = "Visuals/CHARACTERS/player/hero-abajo.png"
+	method retroceder(posicion) = posicion.up(1)
+
+	method determinarImagen(elemento){
+		if (elemento == personaje)
+			elemento.image("Visuals/CHARACTERS/player/hero-arriba.png")
+		else if (elemento == armaDisparo)
+			elemento.image("Visuals/OBJECTS/items/pistola-abajo.png")
+		else if (elemento == disparo)
+			elemento.image("Visuals/OBJECTS/items/bala-abajo.png")
+	}
 }
