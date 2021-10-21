@@ -46,11 +46,6 @@ object juego {
 		keyboard.left().onPressDo { personaje.caminar(izquierda) }
 		keyboard.s().onPressDo { personaje.soltarArma() }
 		keyboard.d().onPressDo { personaje.disparar() }
-	
-		keyboard.q().onPressDo { game.say(personaje, "basta chicos") }
-		keyboard.w().onPressDo { game.say(personaje, "mamaaa cortaste toda la loz") }
-		keyboard.e().onPressDo { game.say(personaje, "miamiiii") }
-		keyboard.r().onPressDo { game.say(personaje, "yo no manejo el rating, yo manejo un roll royce") }
 	}
 	
 	method definirEventos() {

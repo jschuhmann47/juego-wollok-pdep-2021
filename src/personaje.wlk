@@ -6,7 +6,7 @@ object personaje{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
 	var property direccion = abajo
-	var property image = "Visuals/CHARACTERS/player/hero-arriba.png"
+	var property image = "Visuals/CHARACTERS/player/soldado-izquierda.png"
 	var property vidas = 3
 	var property armaActual = armaVacia
 
