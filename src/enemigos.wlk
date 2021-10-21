@@ -45,9 +45,6 @@ class EnemigoTerrestre{
 	method esPared() = false
 	method esPersonaje() = false
 	method esObjeto() = false
-	/*method esSorpresa() = false
-	method esArma() = false
-	method esMoneda() = false*/
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento enemigo terrestre")
@@ -76,14 +73,10 @@ object fantasma{
 		game.say(self, "Perdiste una vida")
 		pers.perderVida()
 	}
-	
-	method esEnemigo() = true	
+		
 	method esPared() = false
 	method esPersonaje() = false
 	method esObjeto() = false
-	/*method esSorpresa() = false
-	method esArma() = false
-	method esMoneda() = false*/
 }
 
 object perseguir{	

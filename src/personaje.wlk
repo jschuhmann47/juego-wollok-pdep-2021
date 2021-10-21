@@ -33,7 +33,7 @@ object personaje{
 	method esMoneda() = false
 	method esSorpresa() = false
 	
-	method tocarEnemigo(enem){} //el personaje no hace nada, porque ya lo hace el enemigo, solo tiene que entender el mensaje
+	method tocarEnemigo(enem){} //solo tiene que entender el mensaje
 	
 	method agarrarSorpresa(sorpresa){
 		sorpresa.efecto()
@@ -77,8 +77,10 @@ object personaje{
 		vidas -= 1
 		if (vidas == 0)
 			self.morir()
-		else
+		else{
+			self.soltarArma()
 			self.volverAlInicio()
+		}
 	}
 	
 	method volverAlInicio(){

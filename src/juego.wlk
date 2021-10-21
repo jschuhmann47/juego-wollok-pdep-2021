@@ -30,13 +30,12 @@ object juego {
 		game.addVisual(vida)
 		game.addVisual(puntos)
 		game.addVisual(armaDisparo)
-		self.configurarFantasma()
 		
 	}
 	
 	method configurarFantasma(){
-		game.addVisual(fantasma)
 		fantasma.position( posAleatoria.calcularLibre() )
+		game.addVisual(fantasma)
 		game.onTick(4000, "movimiento fantasma", {fantasma.perseguir()})
 	}
 	
@@ -55,6 +54,7 @@ object juego {
 	}
 	
 	method definirEventos() {
+		self.configurarFantasma()
 		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
 		game.onTick(10000, "aparece espada", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
 		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = posAleatoria.calcularLibre() )) })
