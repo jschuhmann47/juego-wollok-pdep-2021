@@ -43,8 +43,13 @@ object personaje{
 	}
 	
 	method usarArma(arma){
-		armaActual = arma
-		armaActual.position(self.siguientePosicion())
+		armaActual=arma
+		armaActual.ocultarArma()
+		armaActual.position(self.position())
+		if(armaActual==armaDisparo)
+			self.image("Visuals/CHARACTERS/player/soldado-izquierda-arma.png")
+		else
+			self.image("Visuals/CHARACTERS/player/soldado-izquierda-espada.png")
 	}
 	
 	method disparar(){
@@ -61,11 +66,12 @@ object personaje{
 	}
 		
 	method soltarArma(){
-		if (armaActual != armaDisparo)
-			game.removeVisual(armaActual)
+		game.removeVisual(armaActual)
 			
 		armaActual = armaVacia
-	}
+		self.image("Visuals/CHARACTERS/player/soldado-izquierda.png")
+		
+		}
 	
 	method morir(){
 		game.removeVisual(self)

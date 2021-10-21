@@ -4,7 +4,11 @@ import enemigos.*
 import puntosYVidas.*
 import juego.*
 
-object armaVacia{}
+object armaVacia{
+	method position(a){}
+	method ocultarArma(){}
+	method image()="Visuals/OBJECTS/blocks/imagen-nula.png"
+}
 
 class Objetos {
 	var property position
@@ -37,7 +41,7 @@ class Objetos {
 
 
 class ArmasMelee inherits Objetos{
-	override method image() = "Visuals/OBJECTS/items/sword.png"
+	var property image="Visuals/OBJECTS/items/sword.png"
 	
 	override method tocarPersonaje(pers){
 		pers.usarArma(self)
@@ -48,6 +52,9 @@ class ArmasMelee inherits Objetos{
 	override method desaparecer(){}
 	method colisionParedDestructible(pared) {
 		game.removeVisual(pared)
+	}
+	method ocultarArma(){
+		self.image("Visuals/OBJECTS/blocks/imagen-nula.png"	)
 	}
 }
 
@@ -66,6 +73,9 @@ object armaDisparo{
 	method colisionPared(){}
 	method imagenNueva(palabra){
 		image="Visuals/OBJECTS/items/pistola-" + palabra.toString() + ".png"
+	}
+	method ocultarArma(){
+		image="Visuals/OBJECTS/blocks/imagen-nula.png"
 	}
 }
 
@@ -88,6 +98,7 @@ object disparo{
 	}
 	method colisionParedDestructible(pared) {
 		game.removeVisual(pared)
+		game.removeVisual(self)
 	}
 }	
 
