@@ -46,7 +46,9 @@ class ArmasMelee inherits Objetos{
 		game.removeVisual(enem)
 	}
 	override method desaparecer(){}
-	
+	method colisionParedDestructible(pared) {
+		game.removeVisual(pared)
+	}
 }
 
 object armaDisparo{
@@ -84,7 +86,9 @@ object disparo{
 	method imagenNueva(palabra){
 		image="Visuals/OBJECTS/items/bala-" + palabra.toString() + ".png"
 	}
-	
+	method colisionParedDestructible(pared) {
+		game.removeVisual(pared)
+	}
 }	
 
 class Monedas inherits Objetos{

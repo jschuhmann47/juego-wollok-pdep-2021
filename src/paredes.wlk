@@ -8,10 +8,16 @@ class Pared {
 	method esEnemigo() = false
 	method esPared() = true
 	method esPersonaje() = false
+	method esObjeto() = false
 	method colisionPared(){}
 	method tocarEnemigo(enem){} //solo tiene que entender el mensaje
 	method tocarPersonaje(pers){} //solo tiene que entender el mensaje
 	
+}
+
+class ParedDestructible inherits Pared{
+	override method image()="Visuals/OBJECTS/blocks/pared-rota.png"
+
 }
 
 object nivel1 {
@@ -31,7 +37,7 @@ object nivel1 {
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
 		self.agregarParedes(paredesL)
 		// Paredes intermedias
-		const intermedias = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4), new Position(x=12,y=1),
+		const intermedias = [/*new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4), new Position(x=12,y=1),*/
 			 new Position(x=12,y=2),new Position(x=12,y=3), new Position(x=12,y=4), new Position(x=6,y=6), new Position(x=7,y=6),
 			 new Position(x=10,y=6), new Position(x=11,y=6), new Position(x=1,y=18), new Position(x=4,y=18), new Position(x=6,y=18),
 			 new Position(x=3,y=16), new Position(x=5,y=16), new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14),
@@ -45,7 +51,9 @@ object nivel1 {
 		// Esquinero
 		const esquinero =  [new Position(x=16,y=16), new Position(x=16,y=15),new Position(x=15,y=16)]
 		self.agregarParedes(esquinero)
-
+		
+		const paredesRotas = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4), new Position(x=12,y=1)]
+		self.agregarParedesDestructibles(paredesRotas)
 	}
 	
 	method agregarParedes(posiciones){
@@ -57,11 +65,13 @@ object nivel1 {
 		paredes.forEach { pared => game.whenCollideDo(pared, { objeto => objeto.colisionPared() }) }
 	}
 	
-}
-
-class ParedesDestructibles inherits Pared{
-	override method image()="Visuals/OBJECTS/items/pared-rota.png"
-	override method colisionPared(){
-		game.removeVisual(self)
+	method agregarParedesDestructibles(posiciones){
+		const posic = new List()
+		const paredesD = new List()
+		posic.addAll(posiciones)
+		posic.forEach { pos => paredesD.add(new ParedDestructible(position = pos)) }
+		paredesD.forEach { pared => game.addVisual(pared) }
+		paredesD.forEach { pared => game.whenCollideDo(pared, { objeto => objeto.colisionParedDestructible(pared) }) }
 	}
+	
 }

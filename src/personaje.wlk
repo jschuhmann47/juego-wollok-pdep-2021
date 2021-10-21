@@ -25,6 +25,9 @@ object personaje{
 	method colisionPared() {
 		position = direccion.retroceder(position)	
 	}
+	method colisionParedDestructible(pared) {
+		self.colisionPared()
+	}
 	
 	method esEnemigo() = false
 	method esPared() = false
