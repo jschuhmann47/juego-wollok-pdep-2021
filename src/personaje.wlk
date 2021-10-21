@@ -86,7 +86,7 @@ object personaje{
 	}
 	
 	method imagenNueva(palabra){
-		image="Visuals/CHARACTERS/player/hero-"+palabra.toString()+".png"
+		image="Visuals/CHARACTERS/player/hero-" + palabra.toString() + ".png"
 	}
 	
 

@@ -68,7 +68,7 @@ object armaDisparo{
 	
 	method colisionPared(){}
 	method imagenNueva(palabra){
-		image="Visuals/CHARACTERS/player/pistola-"+palabra.toString()+".png" //deberia andar pero pone que no existe
+		image="Visuals/OBJECTS/items/pistola-"+palabra.toString()+".png" //deberia andar pero pone que no existe
 	}
 }
 
@@ -87,7 +87,7 @@ object disparo{
 		game.removeVisual(enem)
 	}
 	method imagenNueva(palabra){
-		image="Visuals/CHARACTERS/player/bala-"+palabra.toString()+".png"
+		image="Visuals/OBJECTS/items/bala-"+palabra.toString()+".png"
 	}
 	
 }	
