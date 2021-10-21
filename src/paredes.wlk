@@ -37,12 +37,9 @@ object nivel1 {
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
 		self.agregarParedes(paredesL)
 		// Paredes intermedias
-		const intermedias = [/*new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4), new Position(x=12,y=1),*/
-			 new Position(x=12,y=2),new Position(x=12,y=3), new Position(x=12,y=4), new Position(x=6,y=6), new Position(x=7,y=6),
-			 new Position(x=10,y=6), new Position(x=11,y=6), new Position(x=1,y=18), new Position(x=4,y=18), new Position(x=6,y=18),
-			 new Position(x=3,y=16), new Position(x=5,y=16), new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14),
-			 new Position(x=8,y=17), new Position(x=8,y=16),new Position(x=8,y=15), new Position(x=15,y=10), new Position(x=16,y=10),
-			 new Position(x=17,y=10)]
+		const intermedias = [new Position(x=12,y=1), new Position(x=12,y=2),new Position(x=12,y=3), new Position(x=12,y=4), new Position(x=6,y=6),
+			new Position(x=7,y=6), new Position(x=10,y=6), new Position(x=11,y=6), new Position(x=1,y=18), new Position(x=4,y=18), new Position(x=6,y=18),
+			new Position(x=3,y=16), new Position(x=5,y=16), new Position(x=15,y=10), new Position(x=16,y=10), new Position(x=17,y=10)]
 		self.agregarParedes(intermedias)
 		// T (invertida)
 		const tInvertida = [new Position(x=12,y=17), new Position(x=12,y=16),new Position(x=12,y=15),
@@ -52,8 +49,10 @@ object nivel1 {
 		const esquinero =  [new Position(x=16,y=16), new Position(x=16,y=15),new Position(x=15,y=16)]
 		self.agregarParedes(esquinero)
 		
-		const paredesRotas = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4), new Position(x=12,y=1)]
-		self.agregarParedesDestructibles(paredesRotas)
+		const paredesRotas1 = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4)]
+		self.agregarParedesDestructibles(paredesRotas1)
+		const paredesRotas2 = [new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14), new Position(x=8,y=17), new Position(x=8,y=16),new Position(x=8,y=15)]
+		self.agregarParedesDestructibles(paredesRotas2)
 	}
 	
 	method agregarParedes(posiciones){

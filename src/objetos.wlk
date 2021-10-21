@@ -44,7 +44,8 @@ class ArmasMelee inherits Objetos{
 	var property image="Visuals/OBJECTS/items/sword.png"
 	
 	override method tocarPersonaje(pers){
-		pers.usarArma(self)
+		if(pers.armaActual() == armaVacia)
+			pers.usarArma(self)
 	}
 	override method tocarEnemigo(enem){
 		game.removeVisual(enem)
@@ -52,10 +53,6 @@ class ArmasMelee inherits Objetos{
 	override method desaparecer(){}
 	method colisionParedDestructible(pared) {
 		game.removeVisual(pared)
-	}
-	method ocultarArma(){
-		game.removeVisual(self)
-		//self.image("Visuals/OBJECTS/blocks/imagen-nula.png"	)
 	}
 }
 
@@ -67,17 +64,14 @@ object armaDisparo{
 	
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	method tocarPersonaje(pers){
-		pers.usarArma(self)
+		if(pers.armaActual() == armaVacia)
+			pers.usarArma(self)
 	}
 	method tocarEnemigo(enem){}
 	
 	method colisionPared(){}
 	method imagenNueva(palabra){
 		image="Visuals/OBJECTS/items/pistola-" + palabra.toString() + ".png"
-	}
-	method ocultarArma(){
-		game.removeVisual(self)
-		//image="Visuals/OBJECTS/blocks/imagen-nula.png"
 	}
 }
 
