@@ -1,7 +1,7 @@
 import wollok.game.*
 import personaje.*
 import paredes.*
-import enemigo.*
+import enemigos.*
 import objetos.*
 
 object colores {
@@ -35,6 +35,6 @@ object puntos{
 	}
 	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
 	method esPared() = true
-	method tocarEnemigo(){}
+	method tocarEnemigo(_){}
 	
 }

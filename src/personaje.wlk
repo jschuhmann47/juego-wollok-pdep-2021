@@ -97,8 +97,6 @@ object modificarDireccion{
 		elemento.direccion(direccion)
 		direccion.determinarImagen(elemento)
 	}
-	
-	
 }
 
 object arriba {
@@ -109,15 +107,16 @@ object arriba {
 		elemento.imagenNueva(self)
 	}
 }
+
 object izquierda {
 	method siguientePosicion(posicion) = posicion.left(1)
 	method retroceder(posicion) = posicion.right(1)
 	
 	method determinarImagen(elemento){
 		elemento.imagenNueva(self)
-		}
-	
+	}
 }
+
 object derecha {
 	method siguientePosicion(posicion) = posicion.right(1)
 	method retroceder(posicion) = posicion.left(1)
@@ -126,6 +125,7 @@ object derecha {
 		elemento.imagenNueva(self)
 	}
 }
+
 object abajo {
 	method siguientePosicion(posicion) = posicion.down(1)
 	method retroceder(posicion) = posicion.up(1)
