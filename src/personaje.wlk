@@ -17,10 +17,6 @@ object personaje{
 	method caminar(direcc){
 		direccion = direcc
 		position = self.siguientePosicion()
-		/*if (armaActual != armaVacia){
-			if (armaActual == armaDisparo)
-				modificarDireccion.aplicar(self.direccion(), armaDisparo)
-			self.usarArma(armaActual)}*/
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -32,12 +28,12 @@ object personaje{
 		self.colisionPared()
 	}
 	
+	method tocarDisparo(_){}
+	
 	method esEnemigo() = false
 	method esPared() = false
 	method esPersonaje() = true
-	method esArma() = false
-	method esMoneda() = false
-	method esSorpresa() = false
+	method esObjeto() = false
 	
 	method tocarEnemigo(enem){
 		if (estadoMatarEnem == desactivado){
@@ -66,11 +62,11 @@ object personaje{
 	
 	method disparar(){
 		if (armaActual == armaDisparo){
-			//modificarDireccion.aplicar(self.direccion(), armaDisparo)
 			const nuevoDisparo = new Disparo()
 			nuevoDisparo.position(self.siguientePosicion())
 			modificarDireccion.aplicar(self.direccion(), nuevoDisparo)
 			game.addVisual(nuevoDisparo)
+			game.onCollideDo(nuevoDisparo, { objeto => objeto.tocarDisparo(nuevoDisparo) })
 			game.onTick(1000, "avanzar disparo", {nuevoDisparo.avanzar()})
 		}
 		else

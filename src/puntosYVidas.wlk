@@ -17,10 +17,9 @@ object vida{
 	method tocarPersonaje(pers){
 		pers.colisionPared()
 	}
-	method esSorpresa() = false
-	method esArma() = false
-	method esMoneda() = false
+	method esObjeto() = false
 	method esPared() = true
+	method tocarDisparo(_){}
 }
 
 object puntos{
@@ -35,6 +34,8 @@ object puntos{
 	}
 	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
 	method esPared() = true
+	method esObjeto() = false
 	method tocarEnemigo(_){}
+	method tocarDisparo(_){}
 	
 }

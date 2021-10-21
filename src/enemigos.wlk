@@ -58,6 +58,7 @@ class EnemigoTerrestre{
 	method desaparecer(){}
 	
 	method tocarEnemigo(_){}
+	method tocarDisparo(_){}
 	
 }
 
@@ -77,6 +78,8 @@ object fantasma{
 	method colisionParedDestructible(pared) {
 		self.colisionPared()
 	}
+	
+	method tocarDisparo(_){}
 		
 	method esPared() = false
 	method esPersonaje() = false

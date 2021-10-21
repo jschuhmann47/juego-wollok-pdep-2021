@@ -32,11 +32,12 @@ class Objetos {
 	method tocarEnemigo(enem) {
 		game.removeVisual(self)
 	}
-	
 	method colisionPared(){
 		game.removeVisual(self)
 	}
-	
+	method tocarDisparo(disparo){
+		game.removeVisual(self)
+	}
 }
 
 
@@ -227,7 +228,7 @@ object posAleatoria{
 		const posicionAleatoria = self.calcularPosicionAleatoria()
 		const posOcupada = game.getObjectsIn( posicionAleatoria ).any({ o => o.esPared() || o.esObjeto() })
 		if(posOcupada)
-			self.calcularLibre()
+			return self.calcularLibre()
 		else
 			return posicionAleatoria
 	}
