@@ -20,6 +20,7 @@ object nivel1 {
 	
 	method cargar() {
 		// Bordes
+		self.agregarParedes([new Position(x=3,y=7)])
 		self.agregarParedes((0 .. ancho).map{nro => new Position(x = nro, y = 0)})
 		self.agregarParedes((0 .. 8).map{nro => new Position(x = nro, y = largo)})
 		self.agregarParedes((10 .. largo).map{nro => new Position(x = nro, y = largo)})
@@ -56,4 +57,11 @@ object nivel1 {
 		paredes.forEach { pared => game.whenCollideDo(pared, { objeto => objeto.colisionPared() }) }
 	}
 	
+}
+
+class ParedesDestructibles inherits Pared{
+	override method image()="Visuals/OBJECTS/items/pared-rota.png"
+	override method colisionPared(){
+		game.removeVisual(self)
+	}
 }
