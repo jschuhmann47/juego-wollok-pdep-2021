@@ -54,7 +54,8 @@ class ArmasMelee inherits Objetos{
 		game.removeVisual(pared)
 	}
 	method ocultarArma(){
-		self.image("Visuals/OBJECTS/blocks/imagen-nula.png"	)
+		game.removeVisual(self)
+		//self.image("Visuals/OBJECTS/blocks/imagen-nula.png"	)
 	}
 }
 
@@ -75,13 +76,14 @@ object armaDisparo{
 		image="Visuals/OBJECTS/items/pistola-" + palabra.toString() + ".png"
 	}
 	method ocultarArma(){
-		image="Visuals/OBJECTS/blocks/imagen-nula.png"
+		game.removeVisual(self)
+		//image="Visuals/OBJECTS/blocks/imagen-nula.png"
 	}
 }
 
-object disparo{
-	var property position
-	var property direccion
+class Disparo{
+	var property position = game.at(1,1)
+	var property direccion = abajo
 	var property image = "Visuals/OBJECTS/items/bala-derecha.png"
 	
 	method avanzar(){
@@ -92,6 +94,7 @@ object disparo{
 	}
 	method tocarEnemigo(enem){
 		game.removeVisual(enem)
+		game.removeVisual(self)
 	}
 	method imagenNueva(palabra){
 		image="Visuals/OBJECTS/items/bala-" + palabra.toString() + ".png"
@@ -99,6 +102,10 @@ object disparo{
 	method colisionParedDestructible(pared) {
 		game.removeVisual(pared)
 		game.removeVisual(self)
+	}
+	method tocarPersonaje(pers){
+		game.say(self, "Te chocaste con una bala! Perdiste una vida :(")
+		pers.perderVida()
 	}
 }	
 

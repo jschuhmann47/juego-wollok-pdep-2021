@@ -16,10 +16,7 @@ class EnemigoTerrestre{
 		perseguir.accion(self)
 	}
 	
-	method tocarPersonaje(pers){
-		game.say(self, "Perdiste una vida")
-		pers.perderVida()
-	}
+	method tocarPersonaje(pers){}
 	
 	/*method colisionPared() {
 		direccionChoque = direccion
@@ -39,6 +36,10 @@ class EnemigoTerrestre{
 	method colisionPared(){
 		position = direccion.retroceder(position)
 		//self.mirarHacia(direccion.direcOpuesta())
+	}
+	
+	method colisionParedDestructible(pared) {
+		self.colisionPared()
 	}
 	
 	method esEnemigo() = true	
@@ -72,6 +73,9 @@ object fantasma{
 	method tocarPersonaje(pers){
 		game.say(self, "Perdiste una vida")
 		pers.perderVida()
+	}
+	method colisionParedDestructible(pared) {
+		self.colisionPared()
 	}
 		
 	method esPared() = false

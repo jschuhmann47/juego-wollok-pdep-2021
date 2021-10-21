@@ -2,6 +2,9 @@ import wollok.game.*
 import paredes.*
 import objetos.*
 
+object desactivado{}
+object activado{}
+
 object personaje{
 	const posicionInicial = game.center()
 	var property position = posicionInicial
@@ -9,15 +12,15 @@ object personaje{
 	var property image = "Visuals/CHARACTERS/player/soldado-izquierda.png"
 	var property vidas = 3
 	var property armaActual = armaVacia
+	var property estadoMatarEnem = desactivado
 
 	method caminar(direcc){
 		direccion = direcc
 		position = self.siguientePosicion()
-		if (armaActual != armaVacia){
+		/*if (armaActual != armaVacia){
 			if (armaActual == armaDisparo)
 				modificarDireccion.aplicar(self.direccion(), armaDisparo)
-			self.usarArma(armaActual)
-		}
+			self.usarArma(armaActual)}*/
 	}
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
@@ -36,42 +39,53 @@ object personaje{
 	method esMoneda() = false
 	method esSorpresa() = false
 	
-	method tocarEnemigo(enem){} //solo tiene que entender el mensaje
+	method tocarEnemigo(enem){
+		if (estadoMatarEnem == desactivado){
+			game.say(enem, "Perdiste una vida")
+			self.perderVida()}
+		else{
+			game.say(self, "Te maté! :D")
+			game.removeVisual(enem)
+		}
+	}
 	
 	method agarrarSorpresa(sorpresa){
 		sorpresa.efecto()
 	}
 	
 	method usarArma(arma){
-		armaActual=arma
-		armaActual.ocultarArma()
-		armaActual.position(self.position())
-		if(armaActual==armaDisparo)
+		armaActual = arma
+		game.removeVisual(arma)
+		if(armaActual == armaDisparo)
 			self.image("Visuals/CHARACTERS/player/soldado-izquierda-arma.png")
-		else
+		else{
+			estadoMatarEnem = activado
 			self.image("Visuals/CHARACTERS/player/soldado-izquierda-espada.png")
+		}
 	}
 	
 	method disparar(){
 		if (armaActual == armaDisparo){
-			modificarDireccion.aplicar(self.direccion(), armaDisparo)
-			modificarDireccion.aplicar(self.direccion(), disparo)
-			disparo.position(armaActual.siguientePosicion())
-			if(!game.hasVisual(disparo))
-				game.addVisual(disparo)
-			game.onTick(1000, "avanzar disparo", {disparo.avanzar()})
+			//modificarDireccion.aplicar(self.direccion(), armaDisparo)
+			const nuevoDisparo = new Disparo()
+			nuevoDisparo.position(self.siguientePosicion())
+			modificarDireccion.aplicar(self.direccion(), nuevoDisparo)
+			game.addVisual(nuevoDisparo)
+			game.onTick(1000, "avanzar disparo", {nuevoDisparo.avanzar()})
 		}
 		else
 			game.say(self, "No tenemos arma para disparar")
 	}
 		
 	method soltarArma(){
-		game.removeVisual(armaActual)
-			
+		if (armaActual == armaDisparo){
+			armaDisparo.position(self.siguientePosicion())
+			game.addVisual(armaDisparo)
+		}
+		estadoMatarEnem = desactivado	
 		armaActual = armaVacia
 		self.image("Visuals/CHARACTERS/player/soldado-izquierda.png")
-		
-		}
+	}
 	
 	method morir(){
 		game.removeVisual(self)
