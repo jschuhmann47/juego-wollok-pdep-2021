@@ -51,7 +51,7 @@ class EnemigoTerrestre{
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento enemigo terrestre")
-		game.schedule (5000, { game.onTick(1000, "movimiento enemigo terrestre", { self.perseguir() }) })
+		game.schedule (5000, { game.onTick(3000, "movimiento enemigo terrestre", { self.perseguir() }) })
 	}
 	
 	method aparecer(){
@@ -63,7 +63,7 @@ class EnemigoTerrestre{
 	
 }
 
-class Fantasma{
+object fantasma{
 	var property position
 	method image() = "Visuals/CHARACTERS/enemigos/fantasma.png"
 	
@@ -80,7 +80,7 @@ class Fantasma{
 	method esEnemigo() = true	
 	method esPared() = false
 	method esPersonaje() = false
-	method esObstaculo() = false
+	method esObjeto() = false
 	/*method esSorpresa() = false
 	method esArma() = false
 	method esMoneda() = false*/

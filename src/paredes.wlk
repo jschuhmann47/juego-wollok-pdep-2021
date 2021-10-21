@@ -1,5 +1,5 @@
 import personaje.*
-import enemigo.*
+import enemigos.*
 import wollok.game.*
 
 class Pared {

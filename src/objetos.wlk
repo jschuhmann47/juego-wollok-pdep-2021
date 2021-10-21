@@ -1,6 +1,6 @@
 import wollok.game.*
 import personaje.*
-import enemigo.*
+import enemigos.*
 import puntosYVidas.*
 import juego.*
 
@@ -11,10 +11,6 @@ class Objetos {
 	method esPared() = false
 	method esPersonaje() = false
 	method esEnemigo() = false
-	/*method esArma() = false
-	method esSorpresa() = false
-	method esMoneda() = false
-	method esObstaculo() = false*/
 	method esObjeto() = true
 	method image()
 	
@@ -42,7 +38,6 @@ class Objetos {
 
 class ArmasMelee inherits Objetos{
 	override method image() = "Visuals/OBJECTS/items/sword.png"
-	override method esArma() = true
 	
 	override method tocarPersonaje(pers){
 		pers.usarArma(self)
@@ -58,7 +53,7 @@ object armaDisparo{
 	var property position = posAleatoria.calcularLibre()
 	var property direccion = izquierda
 	var property image = "Visuals/OBJECTS/items/pistola-derecha.png"
-	method esArma() = true
+	method esObjeto() = true
 	
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	method tocarPersonaje(pers){
@@ -95,7 +90,6 @@ object disparo{
 class Monedas inherits Objetos{
 	var property image = "Visuals/OBJECTS/items/bronce.png"
 	var property valor = 0
-	override method esMoneda() = true
 	
 	override method aparecer(){
 		self.calcularValorMoneda()
@@ -130,7 +124,6 @@ class Monedas inherits Objetos{
 
 class Sorpresas inherits Objetos{
 	override method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
-	override method esSorpresa() = true
 	
 	method efecto(){
 		const nroSorpresa = (1 .. 6).anyOne()
@@ -179,8 +172,9 @@ object sorpresa2{
 
 object sorpresa3{
 	method aplicar(){
-		game.say(personaje, "El enemigo se queda quieto por 5 segundos :D")
-		enemigo.quedarseQuieto()
+		game.say(personaje, "Los enemigos terrestres se quedan quietos por 5 segundos :D")
+		if (!enemigosT.isEmpty())
+			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
 	}
 }
 
@@ -208,7 +202,6 @@ object sorpresa6{
 class Obstaculo inherits Objetos{
 	const nroObstaculo = (1 .. 3).anyOne()
 	override method image() = "Visuals/OBJECTS/blocks/obstaculo" + nroObstaculo.toString() + ".png"
-	override method esObstaculo() = true
 	override method tocarPersonaje(param){}
 }
 
