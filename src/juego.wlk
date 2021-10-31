@@ -62,7 +62,6 @@ object juego {
 	method nuevoObstaculo(){
 		const nuevoObstaculo = new Obstaculo (position = posAleatoria.calcularLibre())
 		self.spawnear(nuevoObstaculo)
-		game.onCollideDo(nuevoObstaculo, { objeto => objeto.colisionPared() })
 	}
 	
 	method spawnear(objeto){

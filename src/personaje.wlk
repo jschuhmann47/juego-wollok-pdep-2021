@@ -22,13 +22,6 @@ object personaje{
 
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	
-	method colisionPared() {
-		position = direccion.retroceder(position)	
-	}
-	method colisionParedDestructible(pared) {
-		self.colisionPared()
-	}
-	
 	method tocarDisparo(_){}
 	
 	method tocarEnemigo(enem){

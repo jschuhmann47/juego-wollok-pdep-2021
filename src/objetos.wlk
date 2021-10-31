@@ -26,9 +26,6 @@ class Objetos {
 	method tocarEnemigo(enem) {
 		game.removeVisual(self)
 	}
-	method colisionPared(){
-		game.removeVisual(self)
-	}
 	method tocarDisparo(disparo){
 		game.removeVisual(self)
 	}
@@ -107,10 +104,6 @@ class ArmasMelee inherits Arma{
 		if(usos == 0)
 			pers.soltarArma()
 	}
-
-	method colisionParedDestructible(pared) {
-		game.removeVisual(pared)
-	}
 }
 
 object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
@@ -118,9 +111,6 @@ object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
 	var property image = "Visuals/OBJECTS/items/pistola-derecha.png"
 	
 	override method tocarEnemigo(enem){}
-	override method colisionPared(){
-		position = posAleatoria.calcularLibre()
-	}
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	method imagenNueva(palabra){
 		image = "Visuals/OBJECTS/items/pistola-" + palabra.toString() + ".png"
@@ -144,19 +134,12 @@ class Disparo{
 	method avanzar(){
 		position = direccion.siguientePosicion(position)
 	}
-	method colisionPared(){
-		game.removeVisual(self)
-	}
 	method tocarEnemigo(enem){
 		game.removeVisual(enem)
 		game.removeVisual(self)
 	}
 	method imagenNueva(palabra){
 		image = "Visuals/OBJECTS/items/bala-" + palabra.toString() + ".png"
-	}
-	method colisionParedDestructible(pared) {
-		game.removeVisual(pared)
-		game.removeVisual(self)
 	}
 	method tocarPersonaje(pers){
 		game.say(self, "Te chocaste con una bala! Perdiste una vida :(")
@@ -234,7 +217,16 @@ const sorp6 = {game.say(personaje, "Bueno, esta sorpresa no hace nada :p")}
 class Obstaculo inherits Objetos{
 	const nroObstaculo = (1 .. 3).anyOne()
 	override method image() = "Visuals/OBJECTS/blocks/obstaculo" + nroObstaculo.toString() + ".png"
-	override method tocarPersonaje(param){}
+	method tocar(alguien){
+		const posicion = alguien.position()
+		alguien.position( alguien.direccion().retroceder(posicion) )
+	}
+	override method tocarEnemigo(enem){
+		self.tocar(enem)
+	}
+	override method tocarPersonaje(pers){
+		self.tocar(pers)
+	}
 }
 
 

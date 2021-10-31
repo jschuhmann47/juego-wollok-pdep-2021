@@ -4,20 +4,38 @@ import wollok.game.*
 
 class Pared {
 	var property position
-	method image() = "Visuals/OBJECTS/items/pared.png"
+	method image()
 	method esEnemigo() = false
 	method esPared() = true
 	method esPersonaje() = false
 	method esObjeto() = false
-	method colisionPared(){}
-	method tocarEnemigo(enem){} //solo tiene que entender el mensaje
-	method tocarPersonaje(pers){} //solo tiene que entender el mensaje
 	
+	method tocar(alguien){
+		const posicion = alguien.position()
+		alguien.position( alguien.direccion().retroceder(posicion) )
+	}
+	method tocarEnemigo(enem){
+		self.tocar(enem)
+	}
+	method tocarPersonaje(pers){
+		self.tocar(pers)
+	}
+	method tocarDisparo(disparo)
+}
+
+class ParedIndestructible inherits Pared{
+	override method image() = "Visuals/OBJECTS/items/pared.png"
+	override method tocarDisparo(disparo){
+		game.removeVisual(disparo)
+	}
 }
 
 class ParedDestructible inherits Pared{
 	override method image() = "Visuals/OBJECTS/blocks/pared-rota.png"
-	
+	override method tocarDisparo(disparo){
+		game.removeVisual(disparo)
+		game.removeVisual(self)
+	}
 }
 
 object nivel1 {
@@ -59,9 +77,8 @@ object nivel1 {
 		const posic = new List()
 		const paredes = new List()
 		posic.addAll(posiciones)
-		posic.forEach { pos => paredes.add(new Pared(position = pos)) }
+		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
 		paredes.forEach { pared => game.addVisual(pared) }
-		paredes.forEach { pared => game.whenCollideDo(pared, { objeto => objeto.colisionPared() }) }
 	}
 	
 	method agregarParedesDestructibles(posiciones){
@@ -70,7 +87,6 @@ object nivel1 {
 		posic.addAll(posiciones)
 		posic.forEach { pos => paredesD.add(new ParedDestructible(position = pos)) }
 		paredesD.forEach { pared => game.addVisual(pared) }
-		paredesD.forEach { pared => game.whenCollideDo(pared, { objeto => objeto.colisionParedDestructible(pared) }) }
 	}
 	
 }

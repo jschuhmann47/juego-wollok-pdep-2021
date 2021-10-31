@@ -4,16 +4,12 @@ import personaje.*
 
 class Enemigo{
 	var property position = game.at(1,1)
-	var direccion = abajo
+	var property direccion = abajo
 	method image()
 	method esEnemigo() = true
 	method esPared() = false
 	method esPersonaje() = false
 	method esObjeto() = false
-	
-	method mirarHacia(nuevaDireccion) {
-		direccion = nuevaDireccion
-	}
 	
 	method perseguir(){
 		perseguir.accion(self)
@@ -23,20 +19,10 @@ class Enemigo{
 	method tocarEnemigo(_){}
 	method tocarDisparo(_){}
 	
-	method colisionPared(){}
-	method colisionParedDestructible(pared) {
-		self.colisionPared()
-	}
-	
 }
 
 class EnemigoTerrestre inherits Enemigo{
 	var property image = "Visuals/CHARACTERS/player/hero-derecha.png"
-
-	override method colisionPared(){
-		position = direccion.retroceder(position)
-		//self.mirarHacia(direccion.direcOpuesta())
-	}
 	
 	method quedarseQuieto(){
 		game.removeTickEvent ("movimiento enemigo terrestre")
