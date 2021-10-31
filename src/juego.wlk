@@ -39,6 +39,7 @@ object juego {
 		
 		nivel1.cargar()
 		game.addVisual(armaDisparo)
+		estadoMatarEnem.desactivar()
 		self.configurarFantasma()
 		
 		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
@@ -66,7 +67,7 @@ object juego {
 	
 	method spawnear(objeto){
 		objeto.aparecer()
-		game.schedule(7000, {objeto.desaparecer()})
+		game.schedule(10000, {objeto.desaparecer()})
 	}
 	
 }

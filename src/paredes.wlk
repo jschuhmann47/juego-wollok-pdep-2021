@@ -16,8 +16,8 @@ class Pared {
 }
 
 class ParedDestructible inherits Pared{
-	override method image()="Visuals/OBJECTS/blocks/pared-rota.png"
-
+	override method image() = "Visuals/OBJECTS/blocks/pared-rota.png"
+	
 }
 
 object nivel1 {

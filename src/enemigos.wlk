@@ -56,7 +56,7 @@ class EnemigoTerrestre inherits Enemigo{
 
 object fantasma inherits Enemigo{
 	override method image() = "Visuals/CHARACTERS/enemigos/fantasma.png"
-	
+
 	override method tocarPersonaje(pers){
 		game.say(self, "Perdiste una vida")
 		pers.perderVida()

@@ -35,8 +35,8 @@ class Objetos {
 }
 
 object estadoMatarEnem{
-	var property activado = false
-	var property desactivado = true
+	var property activado
+	var property desactivado
 	
 	method activar(){
 		activado = true
@@ -57,12 +57,13 @@ class Arma inherits Objetos{
 	}
 	
 	method matarA(enem, pers){
-		if ( estadoMatarEnem.desactivado() ){
-			game.say(enem, "Perdiste una vida")
-			pers.perderVida()}
-		else{
+		if ( estadoMatarEnem.activado() ){
 			game.say(pers, "Te maté! :D")
 			game.removeVisual(enem)
+		}
+		if ( estadoMatarEnem.desactivado() ){
+			game.say(pers, "Perdiste una vida")
+			pers.perderVida()
 		}
 	}
 	
@@ -76,14 +77,7 @@ class Arma inherits Objetos{
 		}
 	}
 	
-	method disparar(pers){
-		const nuevoDisparo = new Disparo()
-		nuevoDisparo.position(pers.siguientePosicion())
-		modificarDireccion.aplicar(pers.direccion(), nuevoDisparo)
-		game.addVisual(nuevoDisparo)
-		game.onCollideDo(nuevoDisparo, { objeto => objeto.tocarDisparo(nuevoDisparo) })
-		game.onTick(1000, "avanzar disparo", {nuevoDisparo.avanzar()})
-	}
+	method disparar(pers){}
 	
 	method soltar(pers){
 		if (armaDisparo.estaSiendoUsada()){
@@ -105,11 +99,15 @@ object armaVacia inherits Arma( position = game.at(1,1) ){
 
 class ArmasMelee inherits Arma{
 	var property image = "Visuals/OBJECTS/items/sword.png"
+	var property usos = 3
 	
-	override method tocarEnemigo(enem){
-		game.removeVisual(enem)
+	override method matarA(enem, pers){
+		super(enem, pers)
+		usos -= 1
+		if(usos == 0)
+			pers.soltarArma()
 	}
-	override method desaparecer(){}
+
 	method colisionParedDestructible(pared) {
 		game.removeVisual(pared)
 	}
@@ -126,6 +124,15 @@ object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
 	method siguientePosicion() = direccion.siguientePosicion(position)
 	method imagenNueva(palabra){
 		image = "Visuals/OBJECTS/items/pistola-" + palabra.toString() + ".png"
+	}
+	
+	override method disparar(pers){
+		const nuevoDisparo = new Disparo()
+		nuevoDisparo.position(pers.siguientePosicion())
+		modificarDireccion.aplicar(pers.direccion(), nuevoDisparo)
+		game.addVisual(nuevoDisparo)
+		game.onCollideDo(nuevoDisparo, { objeto => objeto.tocarDisparo(nuevoDisparo) })
+		game.onTick(1000, "avanzar disparo", {nuevoDisparo.avanzar()})
 	}
 }
 
@@ -196,77 +203,32 @@ class Sorpresas inherits Objetos{
 	override method image() = "Visuals/OBJECTS/blocks/sorpresa.png"
 	
 	method efecto(){
-		const nroSorpresa = (1 .. 6).anyOne()
-		
-		if (nroSorpresa == 1){
-			sorpresa1.aplicar()
-		}
-		else if (nroSorpresa == 2){
-			sorpresa2.aplicar()
-		}
-		else if (nroSorpresa == 3){
-			sorpresa3.aplicar()
-		}
-		else if (nroSorpresa == 4){
-			sorpresa4.aplicar()
-		}
-		else if (nroSorpresa == 5){
-			sorpresa5.aplicar()
-		}
-		else
-			sorpresa6.aplicar()
-			
+		const sorpresa = [sorp1, sorp2, sorp3, sorp4, sorp5, sorp6].anyOne()
+		sorpresa.apply()
 		game.removeVisual(self)
 	}
 	
-	
 	override method tocarPersonaje(pers){
-		pers.agarrarSorpresa(self)
-	}
-	
-}
-
-object sorpresa1{
-	method aplicar(){
-		game.say(personaje, "Perdí 500 puntos :(")
-		puntos.disminuirPuntuacion(500)
+		self.efecto()
 	}
 }
 
-object sorpresa2{
-	method aplicar(){
-		game.say(personaje, "Gané 500 puntos :D")
-		puntos.aumentarPuntuacion(500)
-	}
-}
+const sorp1 = {puntos.disminuirPuntuacion(500)}
 
-object sorpresa3{
-	method aplicar(){
-		game.say(personaje, "Los enemigos terrestres se quedan quietos por 5 segundos :D")
+const sorp2 = {puntos.aumentarPuntuacion(500)}
+
+object sorp3 {
+	method apply(){
 		if (!enemigosT.isEmpty())
 			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
 	}
 }
 
-object sorpresa4{
-	method aplicar(){
-		game.say(personaje, "Perdí una vida :(")
-		personaje.perderVida()
-	}
-}
+const sorp4 = {personaje.perderVida()}
 
-object sorpresa5{
-	method aplicar(){
-		game.say(personaje, "Gané una vida :D")
-		personaje.ganarVida()
-	}
-}
+const sorp5 = {personaje.ganarVida()}
 
-object sorpresa6{
-	method aplicar(){
-		game.say(personaje, "Bueno, esta sorpresa no hace nada :p")
-	}
-}
+const sorp6 = {game.say(personaje, "Bueno, esta sorpresa no hace nada :p")}
 
 
 class Obstaculo inherits Objetos{

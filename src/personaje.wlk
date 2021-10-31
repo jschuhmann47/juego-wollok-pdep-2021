@@ -35,17 +35,13 @@ object personaje{
 		arma.matarA(enem, self)
 	}
 	
-	method agarrarSorpresa(sorpresa){
-		sorpresa.efecto()
-	}
-	
 	method usarArma(nuevaArma){
 		arma = nuevaArma
 		arma.usar(self)
 	}
 	
 	method disparar(){
-		validar.personajeTieneArmaDisparo(self)
+		validar.personajeTieneArmaDisparo()
 		arma.disparar(self)
 	}
 		
@@ -85,9 +81,9 @@ object personaje{
 }
 
 object validar{
-	method personajeTieneArmaDisparo(pers) {
-		if( armaDisparo.estaSiendoUsada() )
-			self.error("No tengo arma para disparar")
+	method personajeTieneArmaDisparo() {
+		if( !armaDisparo.estaSiendoUsada() )
+			self.error("No tengo arma para disparar :(")
 	}
 }
 
