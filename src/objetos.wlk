@@ -33,15 +33,12 @@ class Objetos {
 
 object estadoMatarEnem{
 	var property activado
-	var property desactivado
 	
 	method activar(){
 		activado = true
-		desactivado = false
 	}
 	method desactivar(){
 		activado = false
-		desactivado = true
 	}
 }
 
@@ -58,7 +55,7 @@ class Arma inherits Objetos{
 			game.say(pers, "Te maté! :D")
 			game.removeVisual(enem)
 		}
-		if ( estadoMatarEnem.desactivado() ){
+		else{
 			game.say(pers, "Perdiste una vida")
 			pers.perderVida()
 		}
@@ -122,7 +119,7 @@ object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
 		modificarDireccion.aplicar(pers.direccion(), nuevoDisparo)
 		game.addVisual(nuevoDisparo)
 		game.onCollideDo(nuevoDisparo, { objeto => objeto.tocarDisparo(nuevoDisparo) })
-		game.onTick(1000, "avanzar disparo", {nuevoDisparo.avanzar()})
+		game.onTick(500, "avanzar disparo", {nuevoDisparo.avanzar()})
 	}
 }
 

@@ -3,6 +3,8 @@ import personaje.*
 import paredes.*
 import enemigos.*
 import objetos.*
+import juego.*
+import niveles.*
 
 object colores {
 	const property blanco = "FFFFFFFF"
@@ -28,6 +30,9 @@ object puntos{
 	method text() = puntuacion.toString()
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
+		if(puntuacion>=1000){
+			juego.cargarNivel(dos)
+		}
 	}
 	method disminuirPuntuacion(puntos){
 		puntuacion = (puntuacion-puntos).max(0)
@@ -37,5 +42,6 @@ object puntos{
 	method esObjeto() = false
 	method tocarEnemigo(_){}
 	method tocarDisparo(_){}
+	
 	
 }

@@ -4,10 +4,13 @@ import paredes.*
 import enemigos.*
 import puntosYVidas.*
 import objetos.*
+import niveles.*
 
 const enemigosT = new List()
 
 object juego {
+	
+	var nivelActual=uno
 	
 	method configurarPantalla() {
 		game.width(20)
@@ -37,7 +40,7 @@ object juego {
 		keyboard.s().onPressDo { personaje.soltarArma() }
 		keyboard.d().onPressDo { personaje.disparar() }
 		
-		nivel1.cargar()
+		nivelActual.cargar()
 		game.addVisual(armaDisparo)
 		estadoMatarEnem.desactivar()
 		self.configurarFantasma()
@@ -67,6 +70,13 @@ object juego {
 	method spawnear(objeto){
 		objeto.aparecer()
 		game.schedule(10000, {objeto.desaparecer()})
+	}
+	method cargarNivel(numero){
+		self.quitarNivelActual()
+		numero.cargar()
+	}
+	method quitarNivelActual(){
+		nivelActual.quitarNivel()
 	}
 	
 }
