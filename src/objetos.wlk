@@ -100,6 +100,8 @@ class ArmasMelee inherits Arma{
 	
 	override method matarA(enem, pers){
 		super(enem, pers)
+		const sonido=game.sound("Sounds/espada.mp3") //mp3
+		sonido.play()
 		usos -= 1
 		if(usos == 0)
 			pers.soltarArma()
@@ -124,6 +126,8 @@ object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
 		game.addVisual(nuevoDisparo)
 		game.onCollideDo(nuevoDisparo, { objeto => objeto.tocarDisparo(nuevoDisparo) })
 		game.onTick(500, "avanzar disparo", {nuevoDisparo.avanzar()})
+		const sonido=game.sound("Sounds/disparo.mp3")
+		sonido.play()
 	}
 }
 
@@ -206,7 +210,13 @@ object sorp3 {
 		if (!enemigosT.isEmpty())
 			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
 	}
+//	method prueba(){
+//		return {if (!enemigosT.isEmpty())
+//			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
+//	}
 }
+
+//const sor3=sorp3.prueba()
 
 const sorp4 = {personaje.perderVida()}
 

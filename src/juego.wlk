@@ -7,6 +7,7 @@ import objetos.*
 import niveles.*
 
 const enemigosT = new List()
+const PUNTOSPARAGANAR=500
 
 object juego {
 	
@@ -16,7 +17,8 @@ object juego {
 		game.width(20)
 		game.height(20)
 		game.title("Juego")
-		nivelActual.fondo()
+		fondo.agregarFondo()
+		//nivelActual.fondo()
 	}
 	
 	method configurarFantasma(){
@@ -76,8 +78,17 @@ object juego {
 		game.say(personaje, "Pasé al nivel 2!")
 		nivelActual.quitarNivel()
 		nivelActual = numero
+		fondo.image("Visuals/BACKGROUND/fondo2.jpg")
 		nivelActual.cargar()
-		nivelActual.fondo()
+		
 	}
 	
+}
+
+object fondo{
+	var property image="Visuals/BACKGROUND/fondo.jpg"
+	method position()=game.at(0,0)
+	method agregarFondo(){
+		game.addVisual(self)
+	}
 }

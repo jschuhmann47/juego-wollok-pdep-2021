@@ -1,6 +1,8 @@
 import wollok.game.*
 import paredes.*
 import objetos.*
+import puntosYVidas.*
+import juego.*
 
 object personaje{
 	const posicionInicial = game.center()
@@ -55,12 +57,14 @@ object personaje{
 	}
 	
 	method perderVida(){
+		if(puntos.puntuacion()<PUNTOSPARAGANAR){
 		vidas -= 1
 		if (vidas == 0)
 			self.morir()
 		else{
 			self.soltarArma()
 			self.volverAlInicio()
+		}
 		}
 	}
 	

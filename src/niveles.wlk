@@ -3,25 +3,21 @@ import paredes.*
 
 class Niveles {
 	method agregarParedes(posiciones){
-		const posic = []
-		const paredes = []
-		posic.addAll(posiciones)
-		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
+		self.agregar(posiciones,{ pos => new ParedIndestructible(position = pos) })
+	}
+	
+	method agregarParedesDestructibles(posiciones){
+		self.agregar(posiciones,{ pos => new ParedDestructible(position = pos) })
+	}
+	
+	method agregar(posiciones,crearPared){
+		const paredes = posiciones.map (crearPared)
 		paredes.forEach { pared => game.addVisual(pared) }
 		todasLasParedes.addAll(paredes)
 	}
 	
-	method agregarParedesDestructibles(posiciones){
-		const posic = new List()
-		const paredesD = new List()
-		posic.addAll(posiciones)
-		posic.forEach { pos => paredesD.add(new ParedDestructible(position = pos)) }
-		paredesD.forEach { pared => game.addVisual(pared) }
-		todasLasParedes.addAll(paredesD)
-	}
-	
 	method quitarNivel(){
-		todasLasParedes.forEach { pared=> game.removeVisual(pared) }
+		todasLasParedes.forEach { pared=> if(game.hasVisual(pared)){  game.removeVisual(pared) }}
 	}
 	
 	method agregarBordes(){
@@ -36,7 +32,6 @@ class Niveles {
 	}
 	
 	method cargar()
-	method fondo()
 	
 }
 
@@ -67,10 +62,6 @@ object uno inherits Niveles{
 		self.agregarParedesDestructibles(paredesRotas2)
 	}
 	
-	override method fondo(){
-		game.ground("Visuals/BACKGROUND/terrain.jpg")
-	}
-	
 }
 
 object dos inherits Niveles{
@@ -80,10 +71,6 @@ object dos inherits Niveles{
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
 		self.agregarParedes(paredesL)
-	}
-	
-	override method fondo(){
-		game.ground("Visuals/BACKGROUND/lava.jpg")
 	}
 	
 }

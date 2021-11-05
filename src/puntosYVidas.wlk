@@ -28,7 +28,7 @@ object vida{
 }
 
 object puntos{
-	var puntuacion = 0
+	var property puntuacion = 0
 	var nivelUno = true
 	const property position = game.at(9,18)
 	method text() = puntuacion.toString()
@@ -37,6 +37,10 @@ object puntos{
 		if(nivelUno && puntuacion >= 100){
 			nivelUno = false
 			juego.cargarNivel(dos)
+		}
+		if(puntuacion>=PUNTOSPARAGANAR){
+			game.say(personaje,"Ganamos!")
+			game.schedule(5000, {game.stop()})
 		}
 	}
 	method disminuirPuntuacion(puntos){
