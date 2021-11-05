@@ -21,7 +21,7 @@ class Niveles {
 	}
 	
 	method quitarNivel(){
-		todasLasParedes.forEach { pared => game.removeVisual(pared) }
+		todasLasParedes.forEach { listaPared => listaPared.forEach({ pared=> game.removeVisual(pared)}) }
 	}
 	
 	method agregarBordes(){
