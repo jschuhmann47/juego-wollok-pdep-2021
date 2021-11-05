@@ -34,7 +34,7 @@ object puntos{
 	method text() = puntuacion.toString()
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
-		if(nivelUno && puntuacion >= 1000){
+		if(nivelUno && puntuacion >= 100){
 			nivelUno = false
 			juego.cargarNivel(dos)
 		}

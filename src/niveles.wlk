@@ -1,50 +1,38 @@
 import wollok.game.*
 import paredes.*
 
-
-const posic = new List()
-const paredes = new List()
-
-
-class AgregarParedes{
-	method agregarImagen(){
+class Niveles {
+	method agregarParedes(posiciones){
+		const posic = new List()
+		const paredes = new List()
+		posic.addAll(posiciones)
+		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
 		paredes.forEach { pared => game.addVisual(pared) }
 		todasLasParedes.addAll(paredes)
 	}
-	method agregar(posiciones)
-}
-
-object paredesIndestructibles inherits AgregarParedes{
-	override method agregar(posiciones){
+	
+	method agregarParedesDestructibles(posiciones){
+		const posic = new List()
+		const paredesD = new List()
 		posic.addAll(posiciones)
-		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
+		posic.forEach { pos => paredesD.add(new ParedDestructible(position = pos)) }
+		paredesD.forEach { pared => game.addVisual(pared) }
+		todasLasParedes.addAll(paredesD)
 	}
-}
-
-object paredesDestructibles inherits AgregarParedes{
-	override method agregar (posiciones){
-		posic.addAll(posiciones)
-		posic.forEach { pos => paredes.add(new ParedDestructible(position = pos)) }
-	}
-}
-
-class Niveles {
 	
 	method quitarNivel(){
 		todasLasParedes.forEach { pared=> game.removeVisual(pared) }
-		posic.clear()
-		paredes.clear()
 	}
 	
 	method agregarBordes(){
 		const ancho = game.width() - 1
 		const largo = game.height() - 1
 	
-		paredesIndestructibles.agregar((0 .. ancho).map{nro => new Position(x = nro, y = 0)})
-		paredesIndestructibles.agregar((0 .. 8).map{nro => new Position(x = nro, y = largo)})
-		paredesIndestructibles.agregar((10 .. largo).map{nro => new Position(x = nro, y = largo)})
-		paredesIndestructibles.agregar((0 .. largo).map{nro => new Position(x = 0, y = nro)})
-		paredesIndestructibles.agregar((0 .. largo).map{nro => new Position(x = ancho, y = nro)})
+		self.agregarParedes((0 .. ancho).map{nro => new Position(x = nro, y = 0)})
+		self.agregarParedes((0 .. 8).map{nro => new Position(x = nro, y = largo)})
+		self.agregarParedes((10 .. largo).map{nro => new Position(x = nro, y = largo)})
+		self.agregarParedes((0 .. largo).map{nro => new Position(x = 0, y = nro)})
+		self.agregarParedes((0 .. largo).map{nro => new Position(x = ancho, y = nro)})
 	}
 	
 	method cargar()
@@ -59,27 +47,24 @@ object uno inherits Niveles{
 		// L
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
-		paredesIndestructibles.agregar(paredesL)
+		self.agregarParedes(paredesL)
 		// Paredes intermedias
 		const intermedias = [new Position(x=12,y=1), new Position(x=12,y=2),new Position(x=12,y=3), new Position(x=12,y=4), new Position(x=6,y=6),
 			new Position(x=7,y=6), new Position(x=10,y=6), new Position(x=11,y=6), new Position(x=1,y=18), new Position(x=4,y=18), new Position(x=6,y=18),
 			new Position(x=3,y=16), new Position(x=5,y=16), new Position(x=15,y=10), new Position(x=16,y=10), new Position(x=17,y=10)]
-		paredesIndestructibles.agregar(intermedias)
+		self.agregarParedes(intermedias)
 		// T (invertida)
 		const tInvertida = [new Position(x=12,y=17), new Position(x=12,y=16),new Position(x=12,y=15),
 			new Position(x=11,y=14), new Position(x=12,y=14), new Position(x=13,y=14)]
-		paredesIndestructibles.agregar(tInvertida)
+		self.agregarParedes(tInvertida)
 		// Esquinero
 		const esquinero =  [new Position(x=16,y=16), new Position(x=16,y=15),new Position(x=15,y=16)]
-		paredesIndestructibles.agregar(esquinero)
+		self.agregarParedes(esquinero)
 		
 		const paredesRotas1 = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4)]
-		paredesDestructibles.agregar(paredesRotas1)
+		self.agregarParedesDestructibles(paredesRotas1)
 		const paredesRotas2 = [new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14), new Position(x=8,y=17), new Position(x=8,y=16),new Position(x=8,y=15)]
-		paredesDestructibles.agregar(paredesRotas2)
-		
-		//paredesIndestructibles.agregarImagen()
-		paredesDestructibles.agregarImagen()
+		self.agregarParedesDestructibles(paredesRotas2)
 	}
 	
 	override method fondo(){
@@ -94,9 +79,7 @@ object dos inherits Niveles{
 		// L
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
-		paredesIndestructibles.agregar(paredesL)
-		const paredesRotas1 = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4)]
-		paredesDestructibles.agregar(paredesRotas1)
+		self.agregarParedes(paredesL)
 	}
 	
 	override method fondo(){
