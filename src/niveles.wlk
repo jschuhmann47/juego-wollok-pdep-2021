@@ -1,10 +1,12 @@
 import wollok.game.*
 import paredes.*
 
+
+const posic = new List()
+const paredes = new List()
+
+
 class AgregarParedes{
-	const posic = new List()
-	const paredes = new Set()
-		
 	method agregarImagen(){
 		paredes.forEach { pared => game.addVisual(pared) }
 		todasLasParedes.addAll(paredes)
@@ -22,7 +24,7 @@ object paredesIndestructibles inherits AgregarParedes{
 object paredesDestructibles inherits AgregarParedes{
 	override method agregar (posiciones){
 		posic.addAll(posiciones)
-		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
+		posic.forEach { pos => paredes.add(new ParedDestructible(position = pos)) }
 	}
 }
 
@@ -30,6 +32,8 @@ class Niveles {
 	
 	method quitarNivel(){
 		todasLasParedes.forEach { pared=> game.removeVisual(pared) }
+		posic.clear()
+		paredes.clear()
 	}
 	
 	method agregarBordes(){
@@ -74,7 +78,7 @@ object uno inherits Niveles{
 		const paredesRotas2 = [new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14), new Position(x=8,y=17), new Position(x=8,y=16),new Position(x=8,y=15)]
 		paredesDestructibles.agregar(paredesRotas2)
 		
-		paredesIndestructibles.agregarImagen()
+		//paredesIndestructibles.agregarImagen()
 		paredesDestructibles.agregarImagen()
 	}
 	
@@ -91,6 +95,8 @@ object dos inherits Niveles{
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
 		paredesIndestructibles.agregar(paredesL)
+		const paredesRotas1 = [new Position(x=7,y=1), new Position(x=7,y=2),new Position(x=7,y=3), new Position(x=7,y=4)]
+		paredesDestructibles.agregar(paredesRotas1)
 	}
 	
 	override method fondo(){
