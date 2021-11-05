@@ -77,7 +77,7 @@ object juego {
 		nivelActual.quitarNivel()
 		nivelActual = numero
 		nivelActual.cargar()
-		//nivelActual.fondo()
+		nivelActual.fondo()
 	}
 	
 }

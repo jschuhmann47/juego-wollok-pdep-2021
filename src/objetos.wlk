@@ -86,6 +86,7 @@ class Arma inherits Objetos{
 
 object armaVacia inherits Arma( position = game.at(1,1) ){
 	override method image() = "Visuals/OBJECTS/blocks/imagen-nula.png"
+	override method toString()=""
 	
 	override method matarA(_, pers){}
 	override method usar(_){}
@@ -95,6 +96,7 @@ object armaVacia inherits Arma( position = game.at(1,1) ){
 class ArmasMelee inherits Arma{
 	var property image = "Visuals/OBJECTS/items/sword.png"
 	var property usos = 3
+	override method toString()="-espada"
 	
 	override method matarA(enem, pers){
 		super(enem, pers)
@@ -107,6 +109,7 @@ class ArmasMelee inherits Arma{
 object armaDisparo inherits Arma( position = posAleatoria.calcularLibre() ){
 	var property direccion = izquierda
 	var property image = "Visuals/OBJECTS/items/pistola-derecha.png"
+	override method toString()="-arma"
 	
 	override method tocarEnemigo(enem){}
 	method siguientePosicion() = direccion.siguientePosicion(position)

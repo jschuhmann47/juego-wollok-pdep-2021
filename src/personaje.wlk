@@ -17,6 +17,7 @@ object personaje{
 
 	method caminar(direcc){
 		direccion = direcc
+		direccion.determinarImagen(self)
 		position = self.siguientePosicion()
 	}
 
@@ -68,7 +69,7 @@ object personaje{
 	}
 	
 	method imagenNueva(palabra){
-		image = "Visuals/CHARACTERS/player/soldado-" + palabra.toString() + ".png"
+		image = "Visuals/CHARACTERS/player/soldado-" + palabra.toString() + arma.toString() +".png"
 	}
 
 }

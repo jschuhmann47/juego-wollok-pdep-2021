@@ -3,8 +3,8 @@ import paredes.*
 
 class Niveles {
 	method agregarParedes(posiciones){
-		const posic = new List()
-		const paredes = new List()
+		const posic = []
+		const paredes = []
 		posic.addAll(posiciones)
 		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
 		paredes.forEach { pared => game.addVisual(pared) }
