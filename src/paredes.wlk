@@ -2,6 +2,15 @@ import personaje.*
 import enemigos.*
 import wollok.game.*
 
+const todasLasParedes = new List()
+
+object tocarPared { 
+	method aplicar(alguien){ 
+		const posicion = alguien.position()
+		alguien.position( alguien.direccion().retroceder(posicion) )
+	}
+}
+
 class Pared {
 	var property position
 	method image()
@@ -10,15 +19,11 @@ class Pared {
 	method esPersonaje() = false
 	method esObjeto() = false
 	
-	method tocar(alguien){
-		const posicion = alguien.position()
-		alguien.position( alguien.direccion().retroceder(posicion) )
-	}
 	method tocarEnemigo(enem){
-		self.tocar(enem)
+		tocarPared.aplicar(enem)
 	}
 	method tocarPersonaje(pers){
-		self.tocar(pers)
+		tocarPared.aplicar(pers)
 	}
 	method tocarDisparo(disparo)
 }

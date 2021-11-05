@@ -17,7 +17,10 @@ object vida{
 	method text() = personaje.vidas().toString()
 	method textColor() = colores.blanco()
 	method tocarPersonaje(pers){
-		pers.colisionPared()
+		tocarPared.aplicar(pers)
+	}
+	method tocarEnemigo(enem){
+		tocarPared.aplicar(enem)
 	}
 	method esObjeto() = false
 	method esPared() = true
@@ -26,11 +29,13 @@ object vida{
 
 object puntos{
 	var puntuacion = 0
+	var nivelUno = true
 	const property position = game.at(9,18)
 	method text() = puntuacion.toString()
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
-		if(puntuacion>=1000){
+		if(nivelUno && puntuacion >= 1000){
+			nivelUno = false
 			juego.cargarNivel(dos)
 		}
 	}

@@ -3,6 +3,7 @@ import personaje.*
 import enemigos.*
 import puntosYVidas.*
 import juego.*
+import paredes.*
 
 class Objetos {
 	var property position
@@ -214,15 +215,12 @@ const sorp6 = {game.say(personaje, "Bueno, esta sorpresa no hace nada :p")}
 class Obstaculo inherits Objetos{
 	const nroObstaculo = (1 .. 3).anyOne()
 	override method image() = "Visuals/OBJECTS/blocks/obstaculo" + nroObstaculo.toString() + ".png"
-	method tocar(alguien){
-		const posicion = alguien.position()
-		alguien.position( alguien.direccion().retroceder(posicion) )
-	}
+
 	override method tocarEnemigo(enem){
-		self.tocar(enem)
+		tocarPared.aplicar(enem)
 	}
 	override method tocarPersonaje(pers){
-		self.tocar(pers)
+		tocarPared.aplicar(pers)
 	}
 }
 

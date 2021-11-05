@@ -10,13 +10,13 @@ const enemigosT = new List()
 
 object juego {
 	
-	var nivelActual=uno
+	var property nivelActual = uno
 	
 	method configurarPantalla() {
 		game.width(20)
 		game.height(20)
 		game.title("Juego")
-		game.ground("Visuals/BACKGROUND/terrain.jpg")
+		nivelActual.fondo()
 	}
 	
 	method configurarFantasma(){
@@ -71,12 +71,13 @@ object juego {
 		objeto.aparecer()
 		game.schedule(10000, {objeto.desaparecer()})
 	}
+	
 	method cargarNivel(numero){
-		self.quitarNivelActual()
-		numero.cargar()
-	}
-	method quitarNivelActual(){
+		game.say(personaje, "Pasé al nivel 2!")
 		nivelActual.quitarNivel()
+		nivelActual = numero
+		nivelActual.cargar()
+		//nivelActual.fondo()
 	}
 	
 }

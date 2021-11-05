@@ -2,15 +2,13 @@ import wollok.game.*
 import paredes.*
 
 class Niveles {
-	const ancho = game.width() - 1
-	const largo = game.height() - 1
-	
 	method agregarParedes(posiciones){
 		const posic = new List()
 		const paredes = new List()
 		posic.addAll(posiciones)
 		posic.forEach { pos => paredes.add(new ParedIndestructible(position = pos)) }
 		paredes.forEach { pared => game.addVisual(pared) }
+		todasLasParedes.add(paredes)
 	}
 	
 	method agregarParedesDestructibles(posiciones){
@@ -19,23 +17,33 @@ class Niveles {
 		posic.addAll(posiciones)
 		posic.forEach { pos => paredesD.add(new ParedDestructible(position = pos)) }
 		paredesD.forEach { pared => game.addVisual(pared) }
+		//todasLasParedes.add(paredesD)
 	}
 	
 	method quitarNivel(){
-		//implementame
-	} //limpiar todas las paredes de un nivel para poder cargar el siguiente
+		todasLasParedes.forEach { pared => game.removeVisual(pared) }
+	}
 	
-}
-
-object uno inherits Niveles{
-	method cargar() {
-		// Bordes
-		self.agregarParedes([new Position(x=3,y=7)])
+	method agregarBordes(){
+		const ancho = game.width() - 1
+		const largo = game.height() - 1
+	
 		self.agregarParedes((0 .. ancho).map{nro => new Position(x = nro, y = 0)})
 		self.agregarParedes((0 .. 8).map{nro => new Position(x = nro, y = largo)})
 		self.agregarParedes((10 .. largo).map{nro => new Position(x = nro, y = largo)})
 		self.agregarParedes((0 .. largo).map{nro => new Position(x = 0, y = nro)})
 		self.agregarParedes((0 .. largo).map{nro => new Position(x = ancho, y = nro)})
+	}
+	
+	method cargar()
+	method fondo()
+	
+}
+
+object uno inherits Niveles{
+	override method cargar() {
+		// Bordes
+		self.agregarBordes()
 		// L
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
@@ -58,19 +66,24 @@ object uno inherits Niveles{
 		const paredesRotas2 = [new Position(x=2,y=14), new Position(x=4,y=14), new Position(x=6,y=14), new Position(x=8,y=17), new Position(x=8,y=16),new Position(x=8,y=15)]
 		self.agregarParedesDestructibles(paredesRotas2)
 	}
+	
+	override method fondo(){
+		game.ground("Visuals/BACKGROUND/terrain.jpg")
+	}
+	
 }
 
 object dos inherits Niveles{
-	method cargar(){
-		self.agregarParedes([new Position(x=3,y=7)])
-		self.agregarParedes((0 .. ancho).map{nro => new Position(x = nro, y = 0)})
-		self.agregarParedes((0 .. 8).map{nro => new Position(x = nro, y = largo)})
-		self.agregarParedes((10 .. largo).map{nro => new Position(x = nro, y = largo)})
-		self.agregarParedes((0 .. largo).map{nro => new Position(x = 0, y = nro)})
-		self.agregarParedes((0 .. largo).map{nro => new Position(x = ancho, y = nro)})
+	override method cargar(){
+		self.agregarBordes()
 		// L
 		const paredesL = [new Position(x=3,y=3), new Position(x=3,y=4), new Position(x=3,y=5),new Position(x=3,y=6),new Position(x=4,y=3),
 			new Position(x=16,y=3), new Position(x=16,y=4), new Position(x=16,y=5),new Position(x=16,y=6),new Position(x=15,y=3)]
 		self.agregarParedes(paredesL)
 	}
+	
+	override method fondo(){
+		game.ground("Visuals/BACKGROUND/lava.jpg")
+	}
+	
 }
