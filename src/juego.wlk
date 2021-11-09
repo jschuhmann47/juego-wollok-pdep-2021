@@ -7,8 +7,8 @@ import objetos.*
 import niveles.*
 
 const enemigosT = new List()
-const PUNTOSPARAGANAR=500
-const musica=game.sound("Sounds/background.mp3")
+const PUNTOSPARAGANAR = 2000
+const musica = game.sound("Sounds/background.mp3")
 
 object juego {
 	
@@ -18,8 +18,7 @@ object juego {
 		game.width(20)
 		game.height(20)
 		game.title("Juego")
-		fondo.agregarFondo()
-		//nivelActual.fondo()
+		fondo.agregar()
 	}
 	
 	method configurarFantasma(){
@@ -36,7 +35,6 @@ object juego {
 		game.addVisual(vida)
 		game.addVisual(puntos)
 		
-		
 		keyboard.down().onPressDo { personaje.caminar(abajo) }
 		keyboard.up().onPressDo { personaje.caminar(arriba) }
 		keyboard.right().onPressDo { personaje.caminar(derecha) }
@@ -49,16 +47,14 @@ object juego {
 		estadoMatarEnem.desactivar()
 		self.configurarFantasma()
 		
-		
 		game.onTick(10000, "aparece sorpresa", { self.spawnear(new Sorpresas( position = posAleatoria.calcularLibre() )) })
 		game.onTick(10000, "aparece espada", { self.spawnear(new ArmasMelee(position = posAleatoria.calcularLibre() )) })
 		game.onTick(4000, "aparece moneda", { self.spawnear(new Monedas(position = posAleatoria.calcularLibre() )) })
-		game.onTick(10000, "aparece obstáculo", {self.nuevoObstaculo()})
-		game.onTick(10000, "aparece enemigo", {self.nuevoEnemigoTerrestre()})
-		game.onTick(1000,"musica de fondo",{self.musicaFondo()})
-	
-		game.start()
+		game.onTick(10000, "aparece obstáculo", { self.nuevoObstaculo() })
+		game.onTick(10000, "aparece enemigo", { self.nuevoEnemigoTerrestre() })
+		game.onTick(1000, "musica de fondo", { self.musicaFondo() })
 		
+		game.start()
 	}
 	
 	method nuevoEnemigoTerrestre(){
@@ -83,9 +79,8 @@ object juego {
 		game.say(personaje, "Pasé al nivel 2!")
 		nivelActual.quitarNivel()
 		nivelActual = numero
-		fondo.image("Visuals/BACKGROUND/fondo2.jpg")
+		fondo.image("Visuals/BACKGROUND/fondo-" + nivelActual.toString() + ".jpg")
 		nivelActual.cargar()
-		
 	}
 	
 	method musicaFondo(){
@@ -98,9 +93,9 @@ object juego {
 }
 
 object fondo{
-	var property image="Visuals/BACKGROUND/fondo.jpg"
-	method position()=game.at(0,0)
-	method agregarFondo(){
+	var property image = "Visuals/BACKGROUND/fondo-uno.jpg"
+	method position() = game.at(0,0)
+	method agregar(){
 		game.addVisual(self)
 	}
 }

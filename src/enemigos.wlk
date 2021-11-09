@@ -19,7 +19,6 @@ class Enemigo{
 	}
 	
 	 method tocarPersonaje(pers){
-		//game.say(self, "Perdiste una vida")
 		pers.perderVida()
 	}
 	method tocarEnemigo(_){}
@@ -52,17 +51,7 @@ object fantasma inherits Enemigo(image="Visuals/CHARACTERS/enemigos/fantasma-aba
 	}
 }
 
-object perseguir{	
-	method comparar(nroAux1, nroAux2){
-		var nroA = nroAux1
-		var nroB = nroAux2
-		if (nroA > nroB){
-			nroA--}
-		else{
-			nroA++}
-		
-		return game.at(nroA, nroB)
-	}
+object perseguir{
 	
 	method accion(enemigo){
 		const xPersonaje = personaje.position().x()
@@ -70,32 +59,29 @@ object perseguir{
 		var xEnemigo = enemigo.position().x()
 		var yEnemigo = enemigo.position().y()
 		var pos
-		
-		/*if (xEnemigo != xPersonaje)
-			pos = self.comparar(xEnemigo, xPersonaje)
-		else if (yEnemigo != yPersonaje)
-			pos = self.comparar(yEnemigo, yPersonaje)*/
 			
 		if(xEnemigo!=xPersonaje){
 			if(xEnemigo>xPersonaje){
 				xEnemigo --
 				enemigo.direccion(izquierda)
-				}
-			else {
+			}
+			else{
 				xEnemigo ++
 				enemigo.direccion(derecha)
-				}
+			}
 		}
+		
 		else if(yEnemigo!=yPersonaje){
 			if(yEnemigo>yPersonaje){
 				yEnemigo --
 				enemigo.direccion(abajo)
-				}
-			else {
+			}
+			else{
 				yEnemigo ++
 				enemigo.direccion(arriba)
-				}
+			}
 		}
+		
 		pos = game.at(xEnemigo, yEnemigo)
 		enemigo.position(pos)
 	}		

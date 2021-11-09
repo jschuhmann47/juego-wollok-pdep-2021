@@ -100,7 +100,7 @@ class ArmasMelee inherits Arma{
 	
 	override method matarA(enem, pers){
 		super(enem, pers)
-		const sonido=game.sound("Sounds/espada.mp3") //mp3
+		const sonido=game.sound("Sounds/espada.mp3")
 		sonido.play()
 		usos -= 1
 		if(usos == 0)
@@ -210,13 +210,7 @@ object sorp3 {
 		if (!enemigosT.isEmpty())
 			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
 	}
-//	method prueba(){
-//		return {if (!enemigosT.isEmpty())
-//			enemigosT.forEach { enemigo => enemigo.quedarseQuieto() }
-//	}
 }
-
-//const sor3=sorp3.prueba()
 
 const sorp4 = {personaje.perderVida()}
 

@@ -34,19 +34,19 @@ object puntos{
 	method text() = puntuacion.toString()
 	method aumentarPuntuacion(puntos){
 		puntuacion += puntos
-		if(nivelUno && puntuacion >= 100){
+		if(nivelUno && puntuacion >= 1000){
 			nivelUno = false
 			juego.cargarNivel(dos)
 		}
-		if(puntuacion>=PUNTOSPARAGANAR){
+		if(puntuacion >= PUNTOSPARAGANAR){
 			game.say(personaje,"Ganamos!")
-			game.schedule(5000, {game.stop()})
+			game.schedule(2000, {game.stop()})
 		}
 	}
 	method disminuirPuntuacion(puntos){
 		puntuacion = (puntuacion-puntos).max(0)
 	}
-	method tocarPersonaje(pers){} //no hace nada, solo tiene que entender el mensaje
+	method tocarPersonaje(pers){}
 	method esPared() = true
 	method esObjeto() = false
 	method tocarEnemigo(_){}
